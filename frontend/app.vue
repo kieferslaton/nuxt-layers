@@ -7,7 +7,6 @@
 </template>
 <script setup>
 const route = useRoute();
-console.log(route.name)
 const isDark = computed(() => route.name === 'find-a-home');
 const isHeaderFixed = computed(() => route.name === 'index');
 

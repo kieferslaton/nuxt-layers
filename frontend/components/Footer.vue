@@ -5,13 +5,13 @@
             <img src="/images/testimonial-mask.png" />
             <h3 class="absolute text-7xl bottom-0 font-normal font-script" style="line-height: 0.3;">Testimonials</h3>
         </div>
-        <quote class="mb-5">"Thank you so much for your help. You made the buying process simple and easy. I will most
+        <blockquote class="mb-5">"Thank you so much for your help. You made the buying process simple and easy. I will most
             definitely be
-            recommending you to my friends!"</quote>
+            recommending you to my friends!"</blockquote>
         <div class="flex items-center mb-14">
             <div class="w-10 h-10 mr-3 rounded-full bg-cover bg-center"
                 style="background-image: url('/images/testimonial-badge.png')"></div>
-            <attr>Brad J</attr>
+            <span>Brad J</span>
         </div>
         <a href="/" class="btn btn-secondary">Send Us A Message</a>
     </section>

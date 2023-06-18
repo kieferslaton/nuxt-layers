@@ -103,7 +103,6 @@ const fetchHomes = async () => {
   loading.value = true
   const { data } = await fetch(`/api/homes?page=${page.value}`).then(res => res.json())
   if (!data) return;
-  console.log(data)
   homes.value = [...homes.value, ...(data.inventoryItems || [])]
   totalRecords.value = data.totalRecords
   loading.value = false

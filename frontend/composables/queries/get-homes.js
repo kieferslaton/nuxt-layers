@@ -10,7 +10,6 @@ export default async function (numberHomes = 10, page = 1) {
             }
           }
         );
-        console.log(data.value)
         return {
           homes: data.value.inventoryItems, 
           totalHomes: data.value.totalRecords, 
