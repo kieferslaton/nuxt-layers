@@ -1,0 +1,15 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@font-face {
+    font-family: 'Calaya';
+    src: url('/fonts/Calaya Regular.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@import "components/typography";
+@import "components/buttons";
+@import "components/cards";
+@import "components/tables.scss"

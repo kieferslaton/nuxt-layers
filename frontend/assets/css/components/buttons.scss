@@ -1,0 +1,18 @@
+.btn {
+    padding: 1.25rem 1.75rem;
+    font-weight: 600;
+    text-align: center;
+    border-radius: 3px;
+
+    &-primary {
+        @apply bg-primary text-white;
+    }
+
+    &-secondary {
+        @apply bg-secondary text-white;
+    }
+
+    &-full {
+        @apply w-full;
+    }
+}
