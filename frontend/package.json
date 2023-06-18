@@ -2,7 +2,8 @@
   "name": "nuxt-app",
   "private": true,
   "scripts": {
-    "build": "nuxt build",
+    "start": "node static-server.js",
+    "build": "nuxt generate",
     "dev": "nuxt dev",
     "generate": "nuxt generate",
     "preview": "nuxt preview",
@@ -13,6 +14,7 @@
     "@nuxtjs/tailwindcss": "^6.7.0",
     "@types/node": "^18",
     "autoprefixer": "^10.4.14",
+    "express": "^4.18.2",
     "nuxt": "^3.5.3",
     "postcss": "^8.4.23",
     "prettier": "^2.8.8",
