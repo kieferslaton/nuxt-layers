@@ -1,5 +1,7 @@
 <template>
-  <header class="masthead flex justify-between items-center p-row"
+  <section v-if="hasHeaderGradient" class="absolute top-0 left-0 w-full h-52"
+    style="background-image: linear-gradient(to bottom, white 0%, white 40%, transparent 100%)"></section>
+  <header class="masthead flex justify-between items-center p-row relative"
     :style="isHeaderFixed && 'position: absolute; width: 100%;'">
     <NuxtLink to="/">
       <img :src="isDark ? logoWhite : logo" alt="Logo" />
@@ -19,5 +21,6 @@ const showNav = ref(false);
 const props = defineProps({
   isDark: Boolean,
   isHeaderFixed: Boolean,
+  hasHeaderGradient: Boolean,
 });
 </script>

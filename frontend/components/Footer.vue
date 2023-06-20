@@ -15,15 +15,15 @@
         </div>
         <a href="/" class="btn btn-secondary">Send Us A Message</a>
     </section>
-    <footer class="px-row pt-20 pb-32 bg-primary text-white flex flex-col items-start">
+    <footer class="px-row pt-20 pb-32 bg-primary text-white flex flex-col items-start leading-loose">
         <a href="/" class="mb-16 self-center">
             <img :src="logoWhite" alt="Regional Home" />
         </a>
         <h4>Address</h4>
         <address class="not-italic">2845 US-80 E <br />Pearl, MS 39208</address>
-        <a href="/" class="underline text-secondary mb-8">Get Directions</a>
+        <a href="/" class="underline text-secondary mb-6">Get Directions</a>
         <h4>Phone</h4>
-        <a href="tel:60193913459" class="underline text-secondary mb-8">(601) 939-1459</a>
+        <a href="tel:60193913459" class="underline text-secondary mb-6">(601) 939-1459</a>
         <h4>Hours</h4>
         <table class="mb-16">
             <tr>

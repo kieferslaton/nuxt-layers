@@ -12,7 +12,7 @@
             </span>
             <a href="/" class="underline text-sm">Mark Your Calendar</a>
         </div>
-        <p class="text-white font-bold mb-3">Get More Details</p>
+        <p class="text-white font-bold mb-3 deal-card-more">Get More Details</p>
     </a>
 </template>
 <script setup>

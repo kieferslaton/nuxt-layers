@@ -1,8 +1,11 @@
+@layer base {
+
 .btn {
     padding: 1.25rem 1.75rem;
-    font-weight: 600;
+    font-weight: 500;
     text-align: center;
     border-radius: 3px;
+    justify-content: center;
 
     &-primary {
         @apply bg-primary text-white;
@@ -12,7 +15,27 @@
         @apply bg-secondary text-white;
     }
 
+    &-transparent {
+        @apply border border-white text-white
+    }
+
+    &-secondary-transparent {
+        @apply border-2 border-secondary text-gray-dark;
+    }
+
     &-full {
         @apply w-full;
     }
+
+    &-auto {
+        @apply w-auto;
+    }
+}
+
+.filter-btn {
+    @apply py-2 px-5 rounded-md mr-3 border border-gray-light;
+    &-active {
+        @apply bg-primary text-white font-bold border-none;
+    }
+}
 }

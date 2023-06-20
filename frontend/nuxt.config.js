@@ -25,6 +25,21 @@ export default defineNuxtConfig({
     }
   }, 
 
+  generate: {
+    routes: async () => {
+      const routes = []
+      const config = useRuntimeConfig();
+
+      //Inventory Routes
+      const { data } = await useFetch(`${config.public.regionalApiUrl}/search?storeId=1&page=1&perPage=50`)
+      if(data) {
+        data.inventoryItems.forEach((item) => {
+          routes.push(`/find-a-home/${item.name.toLowerCase().replace(' ','-')}`)
+        })
+      }
+    }
+  }, 
+
   modules: ['@nuxtjs/tailwindcss'],
   imports: {
     dirs: ['composables', 'composables/*/**']

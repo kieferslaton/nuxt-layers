@@ -1,9 +1,9 @@
 <template>
     <div class="home-card" :style="{
-        'background-image': `url('${home.defaultImageUrl}')`
+        'background-image': `linear-gradient(to bottom, transparent, rgba(0,0,0,0.4)), url('${home.defaultImageUrl}')`
     }">
         <div class="home-card-details">
-            <div class="flex w-full items-center">
+            <div class="flex w-full items-center mb-3">
                 <h2 class="leading-none">{{ home.name }}</h2>
                 <svg xmlns="http://www.w3.org/2000/svg" width="56" height="23.848" viewBox="0 0 56 23.848">
                     <g id="Group_959" data-name="Group 959" transform="translate(-339.569 -612.937)">
@@ -15,7 +15,6 @@
                             stroke-linejoin="round" stroke-width="2" />
                     </g>
                 </svg>
-
             </div>
             <div class="flex w-full justify-between">
                 <span>{{ home.beds }} Bed / {{ home.baths }}Bath / {{ home.length * home.width }}ft<sup>2</sup></span>

@@ -29,7 +29,8 @@
   </section>
   <section class="px-16 pt-20 pb-96 flex flex-col items-center bg-contain bg-no-repeat bg-bottom"
     style="background-image: url('/images/home-homebuyers.png')">
-    <h2 class="text-center uppercase mb-5"><span class="text-accent text-4xl normal-case font-script">The</span><br />
+    <h2 class="text-center uppercase mb-5 tracking-wider"><span
+        class="text-accent text-4xl normal-case font-script">The</span><br />
       Home
       Buyer's Guide
     </h2>
@@ -43,9 +44,9 @@
 <script setup>
 import { Swiper, SwiperSlide, useSwiper } from 'swiper/vue'
 import 'swiper/swiper-bundle.css'
-const homesRef = ref([])
-const { homes } = await getHomes(3);
-homesRef.value = homes;
+const { data } = await useFetch('/api/homes?page=1&perPage=3');
+console.log(data)
+const homes = data.value ? data.value.data.inventoryItems : [];
 const spaceBetween = ref(0);
 const slidesOffset = ref(0);
 const currentSwiperIndex = ref(0);

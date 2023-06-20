@@ -1,0 +1,26 @@
+.accordion {
+    &-item {
+        border-bottom-width: 1px;
+        @apply border-gray-light;
+        &:last-of-type {
+            border-bottom: none;
+        }
+    &-content {
+        @apply pl-10 pt-5;
+
+        h6 {
+            @apply mb-2;
+        }
+
+        ul {
+            @apply list-disc list-inside mb-6;
+            &:last-of-type {
+                margin-bottom: 0;
+            }
+            li {
+                @apply text-gray-dark mb-2;
+            }
+        }
+    }
+}
+}
