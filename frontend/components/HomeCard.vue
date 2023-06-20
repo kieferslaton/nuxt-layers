@@ -1,5 +1,5 @@
 <template>
-    <div class="home-card" :style="{
+    <a :href="`/find-a-home/${home.name.toLowerCase().replace(' ', '-')}`" class="home-card block" :style="{
         'background-image': `linear-gradient(to bottom, transparent, rgba(0,0,0,0.4)), url('${home.defaultImageUrl}')`
     }">
         <div class="home-card-details">
@@ -21,7 +21,7 @@
                 <span class="font-bold">{{ home.category }}</span>
             </div>
         </div>
-    </div>
+    </a>
 </template>
 <script setup>
 const props = defineProps({
