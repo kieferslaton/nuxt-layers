@@ -91,10 +91,10 @@ let sortIcon = ref(null)
 const homes = ref([])
 let totalRecords = ref(0)
 
+let allowImageLoad = ref(false)
 let firstImageLoaded = ref(false)
 
 let handleImageLoad = (index) => {
-  console.log(index)
   if (index === 0 && page.value === 1) {
     firstImageLoaded.value = true;
   }
@@ -102,9 +102,11 @@ let handleImageLoad = (index) => {
 
 let fetchHomes = async () => {
   try {
-    if (page === 1) {
+    if (page.value === 1) {
+      allowImageLoad.value = false;
       firstImageLoaded.value = false;
       loading.value = true;
+      setTimeout(() => allowImageLoad.value = true, 1000)
     }
     const response = await $fetch('/api/homes', {
       params: {
@@ -116,7 +118,6 @@ let fetchHomes = async () => {
         sort: sort.value
       }
     })
-    console.log(response)
     if (response) {
       loading.value = false;
       loadingMore.value = false;
