@@ -12,9 +12,12 @@
       <Icon name="menu" :color="isDark ? 'white' : 'primary'" size="lg" />
     </button>
   </header>
-  <MobileNav @close="() => showNav = false" v-if="showNav" />
+  <Transition @enter="onMobileNavEnter" @leave="onMobileNavLeave">
+    <MobileNav @close="() => showNav = false" v-if="showNav" />
+  </Transition>
 </template>
 <script setup>
+import gsap from 'gsap'
 import logo from "~/assets/images/logo.svg";
 import logoWhite from "~/assets/images/logo-white.svg";
 
@@ -29,4 +32,20 @@ const props = defineProps({
 const headerStyle = computed(() => {
   return props.isHeaderFixed ? { position: 'absolute', width: '100%' } : {};
 });
+
+function onMobileNavEnter(el) {
+  gsap.from(el, {
+    opacity: 0,
+    duration: 0.25,
+  })
+}
+
+function onMobileNavLeave(el, done) {
+  console.log(el)
+  gsap.to(el, {
+    opacity: 0,
+    duration: 0.25,
+    onComplete: done
+  })
+}
 </script>

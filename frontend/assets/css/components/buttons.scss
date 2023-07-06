@@ -18,6 +18,16 @@
       @apply bg-secondary text-white;
     }
 
+    &-gray-lighter {
+      @apply bg-gray-lighter text-gray;
+    }
+
+    &-smallcaps {
+      text-transform: uppercase;
+      letter-spacing: 0.15rem;
+      font-size: 0.85rem;
+    }
+
     &-transparent {
       @apply border border-white text-white;
     }

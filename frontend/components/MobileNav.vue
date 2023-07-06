@@ -5,7 +5,7 @@
         <Icon name="phone" color="white" size="18" filled />
       </a>
       <button @click.prevent="$emit('close')" class="flex h-14 w-14 items-center justify-center">
-        <Icon name="close" color="grayDark" size="xl" />
+        <Icon name="close" color="gray-dark" size="xl" />
       </button>
     </div>
     <div class="px-row">
