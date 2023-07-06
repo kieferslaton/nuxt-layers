@@ -5,11 +5,11 @@
         <Icon name="home" color="white" size="sm" filled class="mr-2" />
         <span class="smallcaps text-gray-lighter text-[0.65rem] font-light">Find a Home</span>
       </span>
-      <FindAHomeFilters :filters="filters" :activeFilter="activeFilter" :searchTerm="filterState.searchTerm"
-        :condition="filterState.condition" :size="filterState.size" :bedrooms="filterState.bedrooms"
-        @filter-change="activeFilter = $event" @update:searchTerm="filterState.searchTerm = $event"
-        @update:condition="filterState.condition = $event" @update:size="filterState.size = $event"
-        @update:bedrooms="filterState.bedrooms = $event" />
+      <FindAHomeFilters :filters="filters" :appliedFilters="appliedFilters" :activeFilter="activeFilter"
+        :searchTerm="filterState.searchTerm" :condition="filterState.condition" :size="filterState.size"
+        :bedrooms="filterState.bedrooms" @filter-change="activeFilter = $event"
+        @update:searchTerm="filterState.searchTerm = $event" @update:condition="filterState.condition = $event"
+        @update:size="filterState.size = $event" @update:bedrooms="filterState.bedrooms = $event" />
     </div>
     <div class="px-row homes lg:px-row2x lg:pt-row" v-if="homes && homes.length > 0" ref="homesList"
       :style="loading || !firstImageLoaded ? 'visibility: hidden; height: 0; overflow-y: hidden;' : 'padding-top: 10vw;'">
@@ -72,16 +72,37 @@ import gsap from 'gsap'
 let page = ref(1)
 let loading = ref(true)
 let loadingMore = ref(false)
-let filters = ['Type', 'Size', 'Bed/Bath']
+let filters = [{
+  label: 'Type',
+  value: 'condition'
+}, {
+  label: 'Size',
+  value: 'size'
+}, {
+  label: 'Bed/Bath',
+  value: 'bedrooms'
+}]
+
 let activeFilter = ref(null)
 let showSort = ref(false)
 const homesList = ref();
 
-const filterState = reactive({
+const filterDefaults = {
   searchTerm: '',
   condition: [1],
   size: 0,
   bedrooms: 0,
+}
+
+const filterState = reactive({ ...filterDefaults })
+
+const appliedFilters = computed(() => {
+  return Object.keys(filterState).filter(key => {
+    if (Array.isArray(filterState[key])) {
+      return filterState[key].length !== filterDefaults[key].length
+    }
+    return filterState[key] !== filterDefaults[key]
+  })
 })
 
 let sort = ref('default')

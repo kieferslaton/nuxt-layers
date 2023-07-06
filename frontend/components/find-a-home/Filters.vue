@@ -14,8 +14,10 @@
                     <Icon name="tune" size="md" color="secondary" class="mr-3" />
                     Filters
                 </button>
-                <button class="py-2 px-5 border border-primary-light rounded-md mr-3" v-for="filter in filters"
-                    @click.prevent="$emit('filter-change', filter)"> {{ filter }}</button>
+                <button class="py-2 px-5 border border-primary-light rounded-md mr-3"
+                    :class="appliedFilters.includes(filter.value) ? 'border-none bg-secondary' : ''"
+                    v-for="filter in filters" @click.prevent="$emit('filter-change', filter.label)"> {{ filter.label
+                    }}</button>
             </div>
             <Transition @enter="onFilterDrawerEnter" @leave="onFilterDrawerLeave">
                 <div class="fixed z-40 bottom-0 left-0 w-screen bg-white text-gray-dark flex flex-col items-center py-row px-row rounded-sm lg:w-[200%]"
@@ -79,6 +81,10 @@ const props = defineProps({
         type: Array,
         default: () => [],
     },
+    appliedFilters: {
+        type: Array,
+        default: () => [],
+    },
     activeFilter: {
         type: String,
         default: null,
@@ -136,6 +142,9 @@ const updateValue = (name, value) => {
             break;
         case 'bedrooms':
             localBedrooms.value = value;
+            break;
+        case 'searchTerm':
+            emit('update:searchTerm', value);
             break;
     }
 }
