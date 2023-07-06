@@ -1,6 +1,7 @@
 <template>
-    <a :href="link" class="deal-card bg-primary-light flex flex-col items-center text-white px-row py-6">
-        <div class="deal-card-inner mb-8 w-full flex flex-col items-center border border-primary pt-10 pb-20">
+    <a :href="link" class="deal-card bg-primary-light flex flex-col items-center text-white px-row py-6 lg:h-full lg:p-10">
+        <div
+            class="deal-card-inner mb-8 w-full flex flex-col items-center border border-primary pt-10 pb-20 grow lg:justify-center">
             <div class="rounded-full border border-secondary h-16 w-16 flex items-center justify-center mb-8">
                 <Icon name="sell" size="24" color="white" filled />
             </div>

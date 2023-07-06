@@ -1,19 +1,17 @@
 <template>
   <div>
-    <Header :isDark="isDark" :isHeaderFixed="isHeaderFixed" :hasHeaderGradient="hasHeaderGradient" />
+    <Header :isDark="isDark" :isHeaderFixed="isHeaderFixed" :hasHeaderGradient="hasHeaderGradient"
+      :currentItem="route.name" />
     <NuxtPage />
     <Footer />
   </div>
 </template>
 <script setup>
 const route = useRoute();
-const isDark = computed(() => route.name === 'find-a-home');
-const isHeaderFixed = computed(() => ['index', 'find-a-home-name'].includes(route.name));
-const hasHeaderGradient = computed(() => route.name === 'find-a-home-name')
+const isDark = useIsDark(route);
+const isHeaderFixed = useIsHeaderFixed(route);
+const hasHeaderGradient = useHasHeaderGradient(route);
 useHead({
-  htmlAttrs: {
-    style: 'font-size: 14px;'
-  },
   bodyAttrs: {
     class: computed(() => (isDark.value ? 'bg-primary text-white' : 'text-primary'))
   }

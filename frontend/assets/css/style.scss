@@ -3,10 +3,10 @@
 @tailwind utilities;
 
 @font-face {
-    font-family: 'Calaya';
-    src: url('/fonts/CalayaRegular.ttf') format('truetype');
-    font-weight: normal;
-    font-style: normal;
+  font-family: "Calaya";
+  src: url("/fonts/CalayaRegular.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
 }
 
 @import "components/typography";
@@ -14,3 +14,4 @@
 @import "components/cards";
 @import "components/tables.scss";
 @import "components/accordions.scss";
+@import "components/tabs.scss";

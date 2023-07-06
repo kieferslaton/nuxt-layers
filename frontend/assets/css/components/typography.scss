@@ -1,43 +1,59 @@
 @layer base {
-    h1 {
-        @apply font-serif font-normal;
-        font-size: 3.5rem;
-        line-height: 1.2;
-    }
-    h2 {
-        @apply font-serif font-normal;
-        font-size: 3rem;
-        line-height: 1.2;
-    }
-    h3 {
-        @apply font-sans font-medium;
-        font-size: 2rem;
-    }
+  html {
+    font-size: 14px;
 
-    h4 {
-        @apply font-normal;
+    @media (min-width: 1024px) {
+      font-size: 16px;
     }
+  }
 
-    h6 {
-        @apply font-bold;
-        @apply text-gray-dark;
-    }
+  h1 {
+    @apply font-serif font-normal;
+    font-size: 3.5rem;
+    line-height: 1.2;
 
-    .smallcaps {
-        @apply font-sans font-normal;
-        font-size: 0.75rem;
-        letter-spacing: 0.125rem;
-        text-transform: uppercase;
-        line-height: 1;
+    @media (min-width: 1024px) {
+      font-size: 5rem;
     }
+  }
+  h2 {
+    @apply font-serif font-normal;
+    font-size: 3rem;
+    line-height: 1.2;
 
-    p {
-        @apply text-gray-dark;
-        @apply leading-loose
+    @media (min-width: 1024px) {
+      font-size: 3.75rem;
     }
+  }
+  h3 {
+    @apply font-sans font-medium;
+    font-size: 2rem;
+  }
 
-    blockquote {
-        font-family: 'kepler-std', serif;
-        font-size: 1.5rem;
-    }
+  h4 {
+    @apply font-normal;
+  }
+
+  h6 {
+    @apply font-bold;
+    @apply text-gray-dark;
+  }
+
+  .smallcaps {
+    @apply font-sans font-normal;
+    font-size: 0.75rem;
+    letter-spacing: 0.125rem;
+    text-transform: uppercase;
+    line-height: 1;
+  }
+
+  p {
+    @apply text-gray-dark;
+    @apply leading-loose;
+  }
+
+  blockquote {
+    font-family: "kepler-std", serif;
+    font-size: 1.5rem;
+  }
 }
