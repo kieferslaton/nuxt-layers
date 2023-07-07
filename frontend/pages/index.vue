@@ -1,6 +1,6 @@
 <template>
   <section
-    class="px-row w-full h-screen flex flex-col justify-between items-center pt-36 pb-4 bg-cover lg:pt-60 lg:justify-start"
+    class="px-row w-full h-screen flex flex-col justify-between items-center pt-36 pb-4 bg-[length:350vw] lg:pt-60 lg:justify-start"
     style="background-image: linear-gradient(to bottom, transparent 90%, #234C5C), url('/images/home-hero.png'); background-position: 40% 0;">
     <h1 class="text-center lg:w-[28rem]">Where houses become <span
         class="font-script text-7xl text-secondary lg:text-9xl">homes</span>
@@ -10,10 +10,10 @@
     </NuxtLink>
   </section>
   <section class="px-row bg-primary text-white pt-16 pb-20 lg:px-row2x">
-    <Tag tag="Our Mission" class="mb-10" />
-    <h2 class="mb-12 lg:w-[55vw]">Make your home buying experience easy and enjoyable</h2>
-    <h4 class="smallcaps text-gray-light mb-7">Featured Homes</h4>
-    <div class="-mr-row lg:-mr-row2x relative">
+    <h4 class="smallcaps text-gray-light mb-4">Our Mission</h4>
+    <h2 class="mb-6 lg:w-[55vw]">Make your home buying experience easy and enjoyable</h2>
+    <h5 class="mb-16">Check out our featured homes.</h5>
+    <div class="-mx-row lg:-mr-row2x relative">
       <div class="hidden absolute top-0 right-full h-full w-[10vw] lg:flex flex-col items-center justify-center gap-5">
         <button class="bg-white rounded-full h-8 w-8 flex items-center justify-center"
           :class="currentSwiperIndex === 0 && 'opacity-25'" @click="() => {
@@ -33,8 +33,8 @@
         </button>
       </div>
       <ClientOnly>
-        <Swiper @swiper="onSwiperReady" @slideChange="onSlideChange" :slides-per-view="1.1" :space-between="spaceBetween"
-          :slides-offset-after="slidesOffset" :breakpoints="{
+        <Swiper @swiper="onSwiperReady" @slideChange="onSlideChange" :slides-per-view="1.15" :space-between="spaceBetween"
+          :slides-offset-before="slidesOffset / 2 - 1" :slides-offset-after="slidesOffset" :breakpoints="{
             1024: {
               slidesPerView: 2.5
             }

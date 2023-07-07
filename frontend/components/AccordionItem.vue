@@ -9,12 +9,31 @@
                 <Icon :name="isOpen ? 'keyboard_arrow_up' : 'keyboard_arrow_down'" size="sm" color="white" />
             </div>
         </div>
-        <div v-if="isOpen" v-html="item.html" class="accordion-item-content"></div>
+        <Transition @enter="onAccordionEnter" @leave="onAccordionLeave">
+            <div v-if="isOpen" v-html="item.html" class="accordion-item-content" style="overflow-y: hidden;"></div>
+        </Transition>
     </div>
 </template>
 <script setup>
+import gsap from 'gsap';
+
 const props = defineProps({
     isOpen: Boolean,
     item: Object
 })
+
+const onAccordionEnter = (el) => {
+    gsap.from(el, {
+        height: 0,
+        duration: 0.25,
+    })
+}
+
+const onAccordionLeave = (el, done) => {
+    gsap.to(el, {
+        height: 0,
+        duration: 0.25,
+        onComplete: done
+    })
+}
 </script>

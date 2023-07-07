@@ -8,7 +8,7 @@
     </NuxtLink>
     <Nav class="hidden lg:flex" :currentItem="currentItem" />
     <button @click.prevent="() => showNav = true"
-      class="h-14 w-14 flex items-center justify-center border border-gray-light rounded-[3px] lg:hidden">
+      class="h-14 w-14 flex items-center justify-center border border-[#C8D2D6] rounded-[3px] lg:hidden">
       <Icon name="menu" :color="isDark ? 'white' : 'primary'" size="lg" />
     </button>
   </header>
