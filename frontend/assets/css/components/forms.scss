@@ -1,0 +1,15 @@
+.pac-item,
+.pac-item-query {
+  font-family: "neue-haas-grotesk-text", "Arial", sans-serif !important;
+  padding: 0.5rem;
+}
+
+.pac-container {
+  &::after {
+    display: none !important;
+  }
+}
+
+.pac-icon {
+  display: none;
+}

@@ -10,46 +10,54 @@ export default defineNuxtConfig({
         },
         {
           rel: "stylesheet",
-          href: "https://fonts.googleapis.com/icon?family=Material+Icons"
-        }
+          href: "https://fonts.googleapis.com/icon?family=Material+Icons",
+        },
+      ],
+      script: [
+        {
+          src: "https://maps.googleapis.com/maps/api/js?key=AIzaSyCrI98GTvPp-yGlhnVKX2sgGeexccPOKAk&libraries=places",
+          defer: true,
+        },
       ],
     },
   },
-  css: [
-    '~/assets/css/style.scss',
-  ],
-  
+  css: ["~/assets/css/style.scss"],
+
   runtimeConfig: {
     public: {
-      regionalApiUrl: process.env.REGIONAL_API_URL || '/api'
-    }
-  }, 
+      regionalApiUrl: process.env.REGIONAL_API_URL || "/api",
+    },
+  },
 
   generate: {
     routes: async () => {
-      const routes = []
+      const routes = [];
       const config = useRuntimeConfig();
 
       //Inventory Routes
-      const { data } = await useFetch(`${config.public.regionalApiUrl}/search?storeId=1&page=1&perPage=50`)
-      if(data) {
+      const { data } = await useFetch(
+        `${config.public.regionalApiUrl}/search?storeId=1&page=1&perPage=50`
+      );
+      if (data) {
         data.inventoryItems.forEach((item) => {
-          routes.push(`/find-a-home/${item.name.toLowerCase().replace(' ','-')}`)
-        })
+          routes.push(
+            `/find-a-home/${item.name.toLowerCase().replace(" ", "-")}`
+          );
+        });
       }
-    }
-  }, 
+    },
+  },
 
-  modules: ['@nuxtjs/tailwindcss'],
+  modules: ["@nuxtjs/tailwindcss"],
   imports: {
-    dirs: ['composables', 'composables/*/**']
+    dirs: ["composables", "composables/*/**"],
   },
 
   devtools: {
-    enabled: true
-  }, 
+    enabled: true,
+  },
   devServer: {
-    host: '0.0.0.0', 
+    host: "0.0.0.0",
     port: 3000,
-  }
+  },
 });

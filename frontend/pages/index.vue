@@ -1,6 +1,6 @@
 <template>
   <section
-    class="px-row w-full h-screen flex flex-col justify-between items-center pt-36 pb-4 bg-[length:350vw] lg:pt-60 lg:justify-start"
+    class="px-row w-full h-screen flex flex-col justify-between items-center pt-36 pb-4 bg-[length:350vw] lg:pt-60 lg:justify-start lg:bg-cover"
     style="background-image: linear-gradient(to bottom, transparent 90%, #234C5C), url('/images/home-hero.png'); background-position: 40% 0;">
     <h1 class="text-center lg:w-[28rem]">Where houses become <span
         class="font-script text-7xl text-secondary lg:text-9xl">homes</span>
@@ -13,7 +13,7 @@
     <h4 class="smallcaps text-gray-light mb-4">Our Mission</h4>
     <h2 class="mb-6 lg:w-[55vw]">Make your home buying experience easy and enjoyable</h2>
     <h5 class="mb-16">Check out our featured homes.</h5>
-    <div class="-mx-row lg:-mr-row2x relative">
+    <div class="-mx-row lg:-mr-row2x lg:ml-0 relative">
       <div class="hidden absolute top-0 right-full h-full w-[10vw] lg:flex flex-col items-center justify-center gap-5">
         <button class="bg-white rounded-full h-8 w-8 flex items-center justify-center"
           :class="currentSwiperIndex === 0 && 'opacity-25'" @click="() => {

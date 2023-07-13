@@ -27,7 +27,7 @@
         <section class="px-row pt-10 pb-20 bg-primary flex flex-col items-center lg:px-0">
             <div class="bg-white rounded px-row py-row mb-20 lg:px-row2x">
                 <div class="flex flex-col lg:flex-row-reverse lg:gap-20">
-                    <img src="/images/home-single-illo.png" class="w-full mb-5 lg:basis-[400px] shrink-0" />
+                    <img src="/images/home-single-illo.png" class="w-full mb-5 lg:basis-[40%] shrink-0" />
                     <div>
                         <h6 class="mb-4">Description</h6>
                         <p class="mb-7">This home maximizes space and lighting in areas you need it most. It features a
@@ -37,12 +37,12 @@
                             available
                             to make this home truly one-of-a-kind.</p>
                         <div class="lg:flex lg:items-center lg:gap-8">
-                            <a class="btn btn-secondary-transparent btn-full flex items-center mb-5 lg:mb-0 lg:px-8"
+                            <a class="btn btn-secondary-transparent btn-full flex items-center mb-5 lg:mb-0 lg:px-4"
                                 href="#">
                                 <Icon name="360" size="18" color="secondary" class="mr-3" />
                                 Take 3D Tour
                             </a>
-                            <a class="btn btn-secondary-transparent btn-full flex items-center mb-16 lg:mb-0 lg:px-8"
+                            <a class="btn btn-secondary-transparent btn-full flex items-center mb-16 lg:mb-0 lg:px-4"
                                 href="#">
                                 <Icon name="grid_on" size="18" color="secondary" class="mr-3" />
                                 View Floor Plan
@@ -50,7 +50,7 @@
                         </div>
                     </div>
                 </div>
-                <h6>Floor Plan Specifications</h6>
+                <h6 class="lg:mt-row2x">Floor Plan Specifications</h6>
                 <Accordion :items="items" v-if="isMobile" />
                 <Tabs :items="items" v-else />
             </div>

@@ -8,7 +8,7 @@
                 placeholder="Search by Model Name or Serial #" />
         </div>
         <div class="relative">
-            <div class="flex overflow-x-scroll -mr-row">
+            <div class="flex overflow-x-scroll -mr-row lg:overflow-x-auto">
                 <button class="py-2 px-5 border border-primary-light rounded-md mr-3 flex items-center"
                     @click.prevent="$emit('filter-change', 'all')">
                     <Icon name="tune" size="md" color="secondary" class="mr-3" />

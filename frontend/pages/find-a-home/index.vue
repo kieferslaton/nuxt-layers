@@ -1,17 +1,14 @@
 <template>
   <div class="home-archive">
-    <div class="px-row border-t border-b border-primary-light py-6 lg:px-row2x lg:border-none lg:pb-0">
-      <span class="flex items-center mb-4">
-        <Icon name="home" color="white" size="sm" filled class="mr-2" />
-        <span class="smallcaps text-gray-lighter text-[0.65rem] font-light">Find a Home</span>
-      </span>
+    <div class="px-row border-t border-b border-primary-light py-6 lg:px-row2x lg:border-none lg:py-0">
+      <Breadcrumb title="Find a Home" />
       <FindAHomeFilters :filters="filters" :appliedFilters="appliedFilters" :activeFilter="activeFilter"
         :searchTerm="filterState.searchTerm" :condition="filterState.condition" :size="filterState.size"
         :bedrooms="filterState.bedrooms" @filter-change="activeFilter = $event"
         @update:searchTerm="filterState.searchTerm = $event" @update:condition="filterState.condition = $event"
         @update:size="filterState.size = $event" @update:bedrooms="filterState.bedrooms = $event" />
     </div>
-    <div class="px-row homes lg:px-row2x lg:pt-row" v-if="homes && homes.length > 0" ref="homesList"
+    <div class="px-row homes lg:px-row2x lg:pt-16" v-if="homes && homes.length > 0" ref="homesList"
       :style="loading || !firstImageLoaded ? 'visibility: hidden; height: 0; overflow-y: hidden;' : 'padding-top: 10vw;'">
       <div class="flex justify-between items-center mb-row lg:flex-wrap">
         <span class="smallcaps text-gray-light">{{ totalRecords }} Results</span>
