@@ -13,3 +13,24 @@
 .pac-icon {
   display: none;
 }
+
+.vs__dropdown-toggle {
+  border: 1px solid #ddd !important;
+  border-radius: 9999px !important;
+  background: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='20' height='10' fill='%23212121' viewBox='0 0 40 40'><path d='M20 25l10-15h-20l10 15z'/></svg>")
+      no-repeat 95% 55%,
+    #ffffff !important;
+}
+
+.vs__selected-options {
+  color: #333 !important;
+  padding: 0.75rem 0 0.75rem 1rem !important;
+}
+
+.vs__dropdown-menu {
+  color: #333 !important;
+}
+
+.vs__actions {
+  display: none !important;
+}
