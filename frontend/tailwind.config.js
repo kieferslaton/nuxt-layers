@@ -20,6 +20,7 @@ module.exports = {
         "gray-dark": "#333333",
         success: "#6DE093",
         accent: "#FA5F55",
+        error: "#FA5F55",
       },
       borderRadius: {
         sm: "3px",

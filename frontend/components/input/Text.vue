@@ -1,61 +1,82 @@
 <template>
-    <div class="text-input-container" :class="class">
-        <label :for="id" :class="longLabel && 'long-label'">{{ label }}</label>
-        <span v-if="prepend" class="prepend">{{ prepend }}</span>
-        <input type="text" :id="id" required :value="modelValue" @input="$emit('update:modelValue', $event.target.value)" />
-    </div>
+  <div :class="[classes, 'text-input-container', { error: errors?.length }]">
+    <label :for="id" :class="longLabel && 'long-label'">{{ label }}</label>
+    <input
+      type="text"
+      :id="id"
+      required
+      :value="modelValue"
+      @blur="$emit('blur')"
+      @input="$emit('update:modelValue', $event.target.value)"
+    />
+    <small
+      class="mt-1 block w-full text-center text-error"
+      v-if="errors?.length"
+      >{{ errors[0]?.$message }}.</small
+    >
+  </div>
 </template>
 <script setup>
 const props = defineProps({
-    id: String,
-    label: String,
-    modelValue: String,
-    class: String,
-    longLabel: Boolean,
-})
-const emits = defineEmits(['update:modelValue'])
-
+  id: String,
+  label: String,
+  modelValue: String,
+  classes: String,
+  longLabel: Boolean,
+  errors: Array,
+});
+const emits = defineEmits(["update:modelValue", "blur"]);
 </script>
 <style scoped lang="scss">
 .text-input-container {
-    position: relative;
-    width: 100%;
+  position: relative;
+  width: 100%;
 
-    &:focus-within {
-        label:not(.long-label) {
-            color: #3DBDFF;
-        }
+  &:focus-within {
+    label:not(.long-label) {
+      color: #3dbdff;
     }
+  }
 
+  input {
+    border: 1px solid #dddddd;
+    width: 100%;
+    padding: 1rem 1.5rem;
+    border-radius: 9999px;
+    color: #333;
+
+    &:focus {
+      outline: 1px solid #3dbdff;
+    }
+  }
+
+  &.error {
     input {
-        border: 1px solid #DDDDDD;
-        width: 100%;
-        padding: 1rem 1.5rem;
-        border-radius: 9999px;
-        color: #333;
-
-        &:focus {
-            outline: 1px solid #3DBDFF;
-        }
+      border-color: #ff3d3d;
     }
 
     label:not(.long-label) {
-        position: absolute;
-        font-size: 10px;
-        padding: 0 0.5rem;
-        color: #333;
-        background-color: white;
-        left: 1.5rem;
-        transform: translateY(-50%);
+      color: #ff3d3d;
     }
+  }
 
-    .long-label {
-        display: block;
-        margin: 0 auto;
-        text-align: center;
-        color: #333;
-        font-weight: bold;
-        margin-bottom: 1.5rem;
-    }
+  label:not(.long-label) {
+    position: absolute;
+    font-size: 10px;
+    padding: 0 0.5rem;
+    color: #333;
+    background-color: white;
+    left: 1.5rem;
+    transform: translateY(-50%);
+  }
+
+  .long-label {
+    display: block;
+    margin: 0 auto;
+    text-align: center;
+    color: #333;
+    font-weight: bold;
+    margin-bottom: 1.5rem;
+  }
 }
 </style>
