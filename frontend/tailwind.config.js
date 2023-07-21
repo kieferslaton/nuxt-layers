@@ -3,9 +3,10 @@ module.exports = {
   theme: {
     fontFamily: {
       sans: ["neue-haas-grotesk-text", "serif"],
-      serif: ["kepler-std-display", "sans-serif"],
+      serif: ["kepler-std", "serif"],
       script: ["Calaya", "script"],
       display: ["neue-haas-grotesk-display", "sans-serif"],
+      "display-serif": ["kepler-std-display", "sans-serif"],
     },
     extend: {
       colors: {

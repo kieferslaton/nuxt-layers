@@ -26,6 +26,7 @@ export default defineNuxtConfig({
   runtimeConfig: {
     public: {
       regionalApiUrl: process.env.REGIONAL_API_URL || "/api",
+      wordpressParentApiUrl: process.env.WORDPRESS_PARENT_API_URL || "/api",
     },
   },
 
@@ -48,7 +49,7 @@ export default defineNuxtConfig({
     },
   },
 
-  modules: ["@nuxtjs/tailwindcss"],
+  modules: ["@nuxtjs/tailwindcss", "@nuxt/image"],
   imports: {
     dirs: ["composables", "composables/*/**"],
   },

@@ -14,7 +14,7 @@
     </p>
     <!-- Div with background image set to preselect.defaultImageUrl with a 40% opacity black overlay-->
     <div v-if="preselect" class="relative mb-12">
-      <img :src="preselect.defaultImageUrl" class="w-full" />
+      <nuxt-img :src="preselect.defaultImageUrl" class="w-full" />
       <div
         class="absolute left-0 top-0 flex h-full w-full flex-col justify-end bg-[rgba(0,0,0,0.4)] px-row pb-4"
       >

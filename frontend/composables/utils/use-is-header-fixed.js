@@ -1,9 +1,10 @@
-export default function (route) {
-  const isMobile = useIsMobile();
+export default function (route, isMobile) {
   let isHeaderFixed = computed(() => {
     return (
       route.name === "index" ||
-      (route.name === "find-a-home-name" && isMobile.value)
+      route.name === "faqs" ||
+      route.name === "about-services" ||
+      (route.name === "find-a-home-name" && isMobile)
     );
   });
   return isHeaderFixed;

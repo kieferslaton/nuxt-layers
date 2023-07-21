@@ -1,5 +1,5 @@
 export default function () {
-  let isMobile;
+  const isMobile = ref(null);
   if (process.client) {
     const windowWidth = ref(window.innerWidth);
 
@@ -15,9 +15,9 @@ export default function () {
       window.removeEventListener("resize", updateWidth);
     });
 
-    isMobile = computed(() => windowWidth.value < 1024);
+    isMobile.value = computed(() => windowWidth.value < 1024);
   } else {
-    isMobile = false;
+    isMobile.value = false;
   }
 
   return isMobile;

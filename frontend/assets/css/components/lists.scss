@@ -1,0 +1,32 @@
+@layer base {
+  .homebuyers-main {
+    list-style: none;
+    counter-reset: item;
+    & > li {
+      counter-increment: item;
+      padding-left: 3rem;
+      position: relative;
+      border-left: 1px solid #c8d2d6;
+      padding-bottom: 3rem;
+      &:last-of-type {
+        border-left: none;
+      }
+      &::before {
+        content: counter(item);
+        position: absolute;
+        left: 0;
+        top: 0;
+        height: 2.5rem;
+        width: 2.5rem;
+        transform: translateX(-50%);
+        border-radius: 9999px;
+        border: 1px solid #c8d2d6;
+        background: white;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 0.75rem;
+      }
+    }
+  }
+}

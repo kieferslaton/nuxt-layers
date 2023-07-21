@@ -35,6 +35,9 @@
     &-secondary-transparent {
       @apply border-2 border-secondary text-gray-dark;
     }
+    &-gray-light-transparent {
+      @apply border border-gray-light text-primary;
+    }
 
     &-full {
       @apply w-full lg:w-auto;
