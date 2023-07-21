@@ -85,7 +85,7 @@
       ]"
       v-model="formData.type"
       class="px-row py-8"
-      :disable="preselect.category.toLowerCase()"
+      :disable="preselect ? preselect.category.toLowerCase() : null"
     />
     <hr class="w-full border-gray-lighter" />
     <InputRadio
