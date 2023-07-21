@@ -58,7 +58,9 @@
       classes="mb-12"
     />
     <a
-      href="/homebuyers-guide/construction"
+      :href="`/homebuyers-guide/${
+        title === 'Buying' ? 'construction' : 'after-purchase'
+      }`"
       class="btn btn-secondary btn-full mb-10"
       v-if="title === 'Buying' || title === 'Construction'"
     >

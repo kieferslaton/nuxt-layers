@@ -21,7 +21,7 @@
         <h3 class="self-start pt-12 text-center font-serif text-4xl text-white">
           {{ preselect.name }}
         </h3>
-        <div class="flex w-full justify-between">
+        <div class="flex w-full justify-between text-white">
           <h4
             v-html="
               preselect.beds &&
@@ -85,6 +85,7 @@
       ]"
       v-model="formData.type"
       class="px-row py-8"
+      :disable="preselect.category.toLowerCase()"
     />
     <hr class="w-full border-gray-lighter" />
     <InputRadio
@@ -136,7 +137,7 @@ const props = defineProps({
   },
   preselect: {
     type: Object,
-    default: {},
+    default: null,
   },
 });
 </script>

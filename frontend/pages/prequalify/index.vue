@@ -1,9 +1,9 @@
 <template>
   <div class="border-t border-primary-light px-row pb-20 pt-6">
-    <Breadcrumb :title="toTitle(route.name)" />
+    <Breadcrumb />
     <div
       v-if="submitted"
-      class="mb-row flex w-full flex-col items-center rounded bg-white px-row py-12"
+      class="mb-row flex w-full flex-col items-center rounded bg-white px-row py-12 text-gray-dark"
     >
       <h2 class="mb-8 text-4xl text-gray-dark">Thank You</h2>
       <p class="mb-12 text-center">
@@ -11,7 +11,7 @@
         touch shortly.
       </p>
     </div>
-    <div v-else>
+    <div v-else class="text-gray-dark">
       <PrequalifyPreferences
         :formData="formData"
         :v$="v$"
