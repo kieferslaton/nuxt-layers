@@ -1,7 +1,7 @@
 <template>
   <section
     class="relative flex aspect-square items-center justify-center border-b border-b-primary-lighter bg-cover"
-    style="background-image: url('/images/faq-hero.png')"
+    style="background-image: url('/images/services-hero.png')"
   >
     <h1>Services</h1>
     <Breadcrumb classes="absolute bottom-0 left-4" />
