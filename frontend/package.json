@@ -29,10 +29,13 @@
     "graphql": "^16.7.1",
     "graphql-tag": "^2.12.6",
     "gsap": "^3.12.2",
+    "hls.js": "^1.4.10",
+    "plyr": "^3.7.8",
     "sass": "^1.62.1",
     "sass-loader": "^13.2.2",
     "swiper": "^9.4.1",
-    "vue-select": "^4.0.0-beta.6"
+    "vue-select": "^4.0.0-beta.6",
+    "vue3-google-map": "^0.15.0"
   },
   "description": "Look at the [Nuxt 3 documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.",
   "version": "1.0.0",

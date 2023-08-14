@@ -27,4 +27,29 @@
       font-size: 0.85rem;
     }
   }
+
+  .wp-content {
+    h2 {
+      font-size: 1rem;
+      @apply font-sans font-bold;
+      margin-bottom: 1rem;
+    }
+    p {
+      margin-bottom: 1rem;
+    }
+    ul {
+      list-style: disc;
+      padding-inline-start: 2rem;
+      li {
+        margin-bottom: 1rem;
+      }
+    }
+    img {
+      width: calc(100% + 10vw);
+      margin-left: -5vw;
+      margin-right: -5vw;
+      max-width: none;
+      margin-bottom: 5vw;
+    }
+  }
 }

@@ -15,7 +15,7 @@
     ></span>
     <span
       class="smallcaps font-display text-[0.65rem] font-light tracking-[0.25rem] text-gray-lighter"
-      >{{ title }}</span
+      >{{ title.length > 10 ? "..." : title }}</span
     >
   </span>
 </template>

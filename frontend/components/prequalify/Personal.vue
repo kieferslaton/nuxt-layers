@@ -14,7 +14,6 @@
       @blur="v$.firstName.$touch"
       :errors="v$.firstName.$errors"
     />
-    <span class="gray-dark">{{ v$.firstName.errors }}</span>
     <InputText
       id="last-name"
       label="Last Name"
