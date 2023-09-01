@@ -2,19 +2,12 @@ export default defineEventHandler(async (event) => {
   const config = useRuntimeConfig();
   const query = getQuery(event);
 
-  let queryString = `&page=${query.page}&perPage=1&searchTerm=${
-    query.name.split("-")[0]
-  }`;
-  let url = `${config.public.regionalApiUrl}/search?storeId=1${queryString}`;
+  const response = await fetch(config.public.regionalApiUrl);
+  const data = await response.json();
 
-  try {
-    const response = await fetch(url);
-    const data = await response.json();
+  const home = data.store.inventoryItems.find((item) => {
+    return item.name.toLowerCase().replace(" ", "-") === query.name;
+  });
 
-    return data.inventoryItems[0];
-  } catch (e) {
-    return {
-      error: e,
-    };
-  }
+  return home;
 });

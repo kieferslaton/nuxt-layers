@@ -1,5 +1,5 @@
 <template>
-  <div class="home-single lg:px-row2x">
+  <div class="home-single lg:px-row2x" v-if="home">
     <section
       class="h-[140vw] w-full bg-cover bg-bottom lg:h-[640px]"
       :style="{
@@ -96,6 +96,7 @@
 const route = useRoute();
 const isMobile = useIsMobile();
 const { data: home } = await useFetch(`/api/home?name=${route.params.name}`);
+console.log(home.value);
 
 const items = [
   {

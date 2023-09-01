@@ -173,8 +173,8 @@ const homesList = ref();
 const filterDefaults = {
   searchTerm: "",
   condition: [1],
-  size: 0,
-  bedrooms: 0,
+  size: null,
+  bedrooms: null,
 };
 
 const filterState = reactive({ ...filterDefaults });
@@ -212,7 +212,7 @@ let fetchHomes = async () => {
       loading.value = true;
       setTimeout(() => (allowImageLoad.value = true), 1000);
     }
-    const response = await $fetch("/api/homes", {
+    const data = await $fetch("/api/homes", {
       params: {
         page: page.value,
         searchTerm: filterState.searchTerm,
@@ -222,10 +222,11 @@ let fetchHomes = async () => {
         sort: sort.value,
       },
     });
-    if (response) {
+    if (data) {
+      console.log(data);
       loading.value = false;
       loadingMore.value = false;
-      return response.data;
+      return data;
     }
   } catch (error) {
     console.log(error);
@@ -236,30 +237,29 @@ watch(
   filterState,
   async () => {
     page.value = 1;
-    const response = await fetchHomes();
-    if (response) {
-      homes.value = response.inventoryItems;
-      totalRecords.value = response.totalRecords;
+    const data = await fetchHomes();
+    if (data) {
+      homes.value = data.items;
+      totalRecords.value = data.totalRecords;
     }
   },
   { deep: true }
 );
 
 watch(sort, async () => {
-  console.log(sort.value);
   page.value = 1;
   const response = await fetchHomes();
-  console.log(response);
-  if (response) {
-    homes.value = response.inventoryItems;
-    totalRecords.value = response.totalRecords;
+  const data = await fetchHomes();
+  if (data) {
+    homes.value = data.items;
+    totalRecords.value = data.totalRecords;
   }
 });
 
 watch(page, async () => {
-  const response = await fetchHomes();
-  if (response) {
-    homes.value = [...homes.value, ...response.inventoryItems];
+  const data = await fetchHomes();
+  if (data) {
+    homes.value = [...homes.value, ...data.items];
   }
 });
 
@@ -287,10 +287,10 @@ const handleSort = (item) => {
 
 onMounted(async () => {
   window.addEventListener("scroll", handleScroll);
-  const response = await fetchHomes();
-  if (response) {
-    homes.value = response.inventoryItems;
-    totalRecords.value = response.totalRecords;
+  const data = await fetchHomes();
+  if (data) {
+    homes.value = data.items;
+    totalRecords.value = data.totalRecords;
   }
 });
 
