@@ -43,16 +43,23 @@ export default defineNuxtConfig({
       const routes = [];
       const config = useRuntimeConfig();
 
-      //Inventory Routes
-      const { data: homesData } = await useFetch(
-        `${config.public.regionalApiUrl}/search?storeId=1&page=1&perPage=50`
-      );
-      if (homesData) {
-        homesData.inventoryItems.forEach((item) => {
-          routes.push(
-            `/find-a-home/${item.name.toLowerCase().replace(" ", "-")}`
-          );
-        });
+      const storeData = await $fetch(config.public.regionalApiUrl);
+
+      if (storeData) {
+        if (storeData.store) {
+          if (storeData.store.inventoryItems) {
+            storeData.store.inventoryItems.forEach((item) => {
+              routes.push(`/home/${item.name.toLowerCase().replace(" ", "-")}`);
+            });
+          }
+          if (storeData.store.salesTeam) {
+            storeData.store.salesTeam.forEach((agent) => {
+              routes.push(
+                `/agent/${agent.firstName.toLowerCase()}-${agent.lastName.toLowerCase()}`
+              );
+            });
+          }
+        }
       }
 
       const wpQuery = gql`
