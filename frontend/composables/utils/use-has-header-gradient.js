@@ -1,7 +1,12 @@
 export default function (route) {
-  const isMobile = useIsMobile();
-  let isHeaderFixed = computed(() => {
-    return route.name === "find-a-home-name" && isMobile.value;
+  let headerGradient = computed(() => {
+    if (route.name === "index") {
+      return "50vh";
+    } else if (route.name === "find-a-home-name") {
+      return "25vh";
+    } else {
+      return null;
+    }
   });
-  return isHeaderFixed;
+  return headerGradient;
 }

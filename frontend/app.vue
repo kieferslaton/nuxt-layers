@@ -3,7 +3,7 @@
     <Header
       :isDark="isDark"
       :isHeaderFixed="isHeaderFixed"
-      :hasHeaderGradient="hasHeaderGradient"
+      :headerGradient="headerGradient"
       :currentItem="route.name"
     />
     <NuxtPage />
@@ -15,7 +15,7 @@ const route = useRoute();
 const isMobile = useIsMobile();
 const isDark = useIsDark(route, isMobile.value);
 const isHeaderFixed = useIsHeaderFixed(route, isMobile.value);
-const hasHeaderGradient = useHasHeaderGradient(route);
+const headerGradient = useHasHeaderGradient(route);
 
 const { data: storeData } = await useFetch("/api/locationinfo");
 console.log(storeData.value);

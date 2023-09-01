@@ -4,7 +4,7 @@ export default function (route, isMobile) {
       route.name === "index" ||
       route.name === "faqs" ||
       route.name === "about-services" ||
-      (route.name === "find-a-home-name" && window.innerWidth < 1024)
+      route.name === "find-a-home-name"
     );
   });
   return isHeaderFixed;

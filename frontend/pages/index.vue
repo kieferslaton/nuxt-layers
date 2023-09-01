@@ -1,16 +1,21 @@
 <template>
   <section
-    class="flex h-screen w-full flex-col items-center justify-between bg-[length:350vw] px-row pb-4 pt-36 lg:justify-start lg:bg-cover lg:pt-60"
+    class="flex h-screen w-full flex-col items-center justify-between bg-[length:400vw] px-row pb-4 pt-36 lg:justify-start lg:bg-cover lg:pt-60"
     style="
       background-image: linear-gradient(to bottom, transparent 90%, #234c5c),
-        url('/images/home-hero.png');
-      background-position: 40% 0;
+        url('/images/homepage-hero.jpg');
+      background-position: 35% 0;
     "
   >
-    <h1 class="text-center lg:w-[28rem]">
-      Where houses become
-      <span class="font-script text-7xl text-secondary lg:text-9xl">homes</span>
-    </h1>
+    <div class="relative">
+      <h1 class="text-center lg:w-[28rem]">
+        You Spoke.<br />
+        <span class="font-script text-7xl text-secondary lg:text-9xl"
+          >We Listened.</span
+        >
+      </h1>
+      <p>3 bed, 2 bath homes starting at $48,900.</p>
+    </div>
     <NuxtLink class="btn btn-secondary btn-full" to="/find-a-home">
       Search For A Home
     </NuxtLink>

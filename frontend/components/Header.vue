@@ -1,7 +1,10 @@
 <template>
   <section
-    v-if="hasHeaderGradient"
-    class="absolute left-0 top-0 h-52 w-full"
+    v-if="headerGradient"
+    class="absolute left-0 top-0 w-full"
+    :style="{
+      height: headerGradient,
+    }"
     style="
       background-image: linear-gradient(
         to bottom,
@@ -47,7 +50,7 @@ const showNav = ref(false);
 const props = defineProps({
   isDark: Boolean,
   isHeaderFixed: Boolean,
-  hasHeaderGradient: Boolean,
+  headerGradient: Boolean,
   currentItem: String,
 });
 

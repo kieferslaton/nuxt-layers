@@ -10,7 +10,7 @@ export default function (route, isMobile) {
       route.name === "blog" ||
       route.name === "blog-slug" ||
       route.name === "locations" ||
-      (route.name === "find-a-home-name" && !isMobile.value)
+      route.name === "find-a-home-name"
     );
   });
   return isDark;
