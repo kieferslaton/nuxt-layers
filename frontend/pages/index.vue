@@ -7,7 +7,7 @@
       background-position: 35% 0;
     "
   >
-    <div class="relative">
+    <div class="relative z-20">
       <h1 class="text-center lg:w-[28rem]">
         You Spoke.<br />
         <span class="font-script text-7xl text-secondary lg:text-9xl"

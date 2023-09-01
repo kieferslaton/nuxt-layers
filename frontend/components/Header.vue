@@ -1,7 +1,7 @@
 <template>
   <section
     v-if="headerGradient"
-    class="absolute left-0 top-0 w-full"
+    class="absolute left-0 top-0 z-10 w-full"
     :style="{
       height: headerGradient,
     }"

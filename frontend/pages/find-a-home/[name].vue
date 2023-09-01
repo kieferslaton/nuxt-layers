@@ -1,11 +1,20 @@
 <template>
   <div class="home-single lg:px-row2x" v-if="home">
     <section
-      class="h-[140vw] w-full bg-cover bg-bottom lg:h-[640px]"
+      @click="() => (showImagesModal = true)"
+      class="relative z-0 h-[140vw] w-full bg-cover bg-bottom lg:h-[640px]"
       :style="{
         backgroundImage: `linear-gradient(to bottom, transparent, rgba(0,0,0,0.3)), url('${home.defaultImageUrl}')`,
       }"
-    ></section>
+    >
+      <button
+        class="absolute bottom-4 left-1/2 flex -translate-x-1/2 items-center justify-center rounded bg-gray-dark px-4 py-2 text-xs tracking-widest"
+        v-if="home.images && home.images.length > 1"
+      >
+        <Icon name="image" size="12" color="white" class="mr-2" filled />
+        1 / {{ home.images.length }}
+      </button>
+    </section>
     <section
       class="border-b border-primary bg-primary px-row pb-10 pt-12 text-white lg:-mt-10 lg:flex lg:items-end lg:justify-between lg:bg-transparent lg:pt-0"
     >
@@ -90,13 +99,53 @@
         Back to Home Search
       </a>
     </section>
+    <div
+      class="fixed left-0 top-0 z-50 h-screen w-screen bg-black"
+      v-if="showImagesModal"
+    >
+      <ClientOnly>
+        <Swiper class="h-full" @slideChange="onSlideChange">
+          <SwiperSlide
+            v-for="image in home.images"
+            :key="image"
+            class="flex h-full flex-col justify-center"
+            style="display: flex !important"
+          >
+            <img :src="image.url" class="mb-row" />
+            <p class="ml-row text-white">{{ image.description }}</p>
+          </SwiperSlide>
+        </Swiper>
+      </ClientOnly>
+      <div
+        class="absolute bottom-4 left-1/2 flex -translate-x-1/2 items-center justify-center rounded px-4 py-2 text-xs tracking-widest"
+      >
+        <Icon name="image" size="12" color="white" class="mr-2" filled />
+        {{ currentImageSlide }} / {{ home.images.length }}
+      </div>
+      <button
+        class="absolute right-10 top-10 z-30"
+        @click="() => (showImagesModal = false)"
+      >
+        <Icon name="close" size="30" color="white" />
+      </button>
+    </div>
   </div>
 </template>
 <script setup>
+import { Swiper, SwiperSlide } from "swiper/vue";
+import "swiper/swiper-bundle.css";
+
 const route = useRoute();
 const isMobile = useIsMobile();
 const { data: home } = await useFetch(`/api/home?name=${route.params.name}`);
-console.log(home.value);
+
+const showImagesModal = ref(false);
+const currentImageSlide = ref(1);
+
+const onSlideChange = (swiper) => {
+  console.log(swiper.activeIndex);
+  currentImageSlide.value = swiper.activeIndex + 1;
+};
 
 const items = [
   {
