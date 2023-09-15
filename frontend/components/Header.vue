@@ -81,14 +81,14 @@ const currentLogo = computed(() => {
     case "regional":
       logoPath =
         props.isDark && !props.isHeaderFixed
-          ? "/logos/regional-logo-white.svg"
-          : "/logos/regional-logo.svg";
+          ? "/public/logos/regional-logo-white.svg"
+          : "/public/logos/regional-logo.svg";
       break;
     case "Town and Country":
       logoPath =
         props.isDark && !props.isHeaderFixed
-          ? "/logos/tc-logo-white.svg"
-          : "/logos/tc-logo.svg";
+          ? "/public/logos/tc-logo-white.svg"
+          : "/public/logos/tc-logo.svg";
       break;
     case "brandC":
       logoPath =
