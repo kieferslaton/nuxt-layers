@@ -151,7 +151,7 @@ const currentLogo = computed(() => {
   let logoPath;
 
   switch (theme) {
-    case "regional":
+    case "Regional":
       logoPath = "/logos/regional-logo-white.svg";
       break;
     case "Town and Country":
