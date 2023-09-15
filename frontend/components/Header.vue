@@ -78,7 +78,7 @@ const currentLogo = computed(() => {
   console.log(theme);
 
   switch (theme) {
-    case "regional":
+    case "Regional":
       logoPath =
         props.isDark && !props.isHeaderFixed
           ? "/public/logos/regional-logo-white.svg"
