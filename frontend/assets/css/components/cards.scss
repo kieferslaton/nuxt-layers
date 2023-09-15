@@ -39,14 +39,4 @@
   &-inner {
     border-radius: 3px;
   }
-  &-more::after {
-    content: "";
-    display: inline-block;
-    width: 18px;
-    height: 11px;
-    background-image: url('data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="19.5" height="12.438" viewBox="0 0 19.5 12.438"%3E%3Cg id="Group_1067" data-name="Group 1067" transform="translate(-357.819 -613.194)"%3E%3Cpath id="Path_252" data-name="Path 252" d="M366.569,1669.413h18s-3.806-3.4-3.746-5.448" transform="translate(-8 -1050)" fill="none" stroke="%233dbdff" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"/%3E%3Cpath id="Path_253" data-name="Path 253" d="M366.569,1663.966h18s-3.806,3.4-3.746,5.448" transform="translate(-8 -1044.552)" fill="none" stroke="%233dbdff" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"/%3E%3C/g%3E%3C/svg%3E');
-    background-size: contain;
-    background-repeat: no-repeat;
-    margin-left: 0.75rem;
-  }
 }

@@ -19,11 +19,7 @@
     :style="headerStyle"
   >
     <NuxtLink to="/" class="lg:left-row2x lg:absolute">
-      <img
-        :src="isDark && !isHeaderFixed ? logoWhite : logo"
-        alt="Logo"
-        class="lg:w-[200px]"
-      />
+      <img :src="currentLogo" alt="Logo" class="lg:w-[200px]" />
     </NuxtLink>
     <Nav class="hidden lg:flex" :currentItem="currentItem" />
     <button
@@ -43,8 +39,6 @@
 </template>
 <script setup>
 import gsap from "gsap";
-import logo from "~/assets/images/logo.svg";
-import logoWhite from "~/assets/images/logo-white.svg";
 
 const showNav = ref(false);
 const props = defineProps({
@@ -75,4 +69,38 @@ function onMobileNavLeave(el, done) {
     onComplete: done,
   });
 }
+
+const currentLogo = computed(() => {
+  const config = useRuntimeConfig();
+  const theme = config.public.theme;
+  let logoPath;
+
+  console.log(theme);
+
+  switch (theme) {
+    case "regional":
+      logoPath =
+        props.isDark && !props.isHeaderFixed
+          ? "/logos/regional-logo-white.svg"
+          : "/logos/regional-logo.svg";
+      break;
+    case "Town and Country":
+      logoPath =
+        props.isDark && !props.isHeaderFixed
+          ? "/logos/tc-logo-white.svg"
+          : "/logos/tc-logo.svg";
+      break;
+    case "brandC":
+      logoPath =
+        props.isDark && !props.isHeaderFixed
+          ? "/logos/logo-brandC-white.svg"
+          : "/logos/logo-brandC.svg";
+      break;
+    default:
+      logoPath = "/logos/default-logo.svg"; // You can set a default logo if needed
+      break;
+  }
+
+  return logoPath;
+});
 </script>

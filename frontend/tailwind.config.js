@@ -1,3 +1,36 @@
+const themes = {
+  Regional: {
+    primary: "#234C5C",
+    "primary-light": "#395E6D",
+    "primary-lighter": "#5A7985",
+    "primary-dark": "#1A3945",
+    secondary: "#3DBDFF",
+    "gray-lighter": "#EEEEEE",
+    "gray-light": "#C8D2D6",
+    gray: "#707070",
+    "gray-dark": "#333333",
+    success: "#6DE093",
+    accent: "#FA5F55",
+    error: "#FA5F55",
+  },
+  "Town and Country": {
+    primary: "#823331",
+    "primary-light": "#BA5552",
+    "primary-lighter": "#E16D5C",
+    "primary-dark": "#5A1F1C",
+    secondary: "#E1C16E",
+    "gray-lighter": "#EEEEEE",
+    "gray-light": "#C8D2D6",
+    gray: "#707070",
+    "gray-dark": "#333333",
+    success: "#6DE093",
+    accent: "#FA5F55",
+    error: "#FA5F55",
+  },
+};
+
+const selectedTheme = process.env.THEME || "Regional";
+
 module.exports = {
   content: [],
   theme: {
@@ -10,18 +43,18 @@ module.exports = {
     },
     extend: {
       colors: {
-        primary: "#234C5C",
-        "primary-light": "#395E6D",
-        "primary-lighter": "#5A7985",
-        "primary-dark": "#1A3945",
-        secondary: "#3DBDFF",
-        "gray-lighter": "#EEEEEE",
-        "gray-light": "#C8D2D6",
-        gray: "#707070",
-        "gray-dark": "#333333",
-        success: "#6DE093",
-        accent: "#FA5F55",
-        error: "#FA5F55",
+        primary: themes[selectedTheme].primary,
+        "primary-light": themes[selectedTheme]["primary-light"],
+        "primary-lighter": themes[selectedTheme]["primary-lighter"],
+        "primary-dark": themes[selectedTheme]["primary-dark"],
+        secondary: themes[selectedTheme].secondary,
+        "gray-lighter": themes[selectedTheme]["gray-lighter"],
+        "gray-light": themes[selectedTheme]["gray-light"],
+        gray: themes[selectedTheme].gray,
+        "gray-dark": themes[selectedTheme]["gray-dark"],
+        success: themes[selectedTheme].success,
+        accent: themes[selectedTheme].accent,
+        error: themes[selectedTheme].error,
       },
       borderRadius: {
         sm: "3px",

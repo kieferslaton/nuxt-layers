@@ -35,6 +35,7 @@ export default defineNuxtConfig({
     public: {
       regionalApiUrl: process.env.REGIONAL_API_URL || "/api",
       wordpressParentApiUrl: process.env.WORDPRESS_PARENT_API_URL || "/api",
+      theme: process.env.THEME || "Regional",
     },
   },
 

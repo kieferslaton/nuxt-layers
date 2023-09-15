@@ -18,7 +18,6 @@ const isHeaderFixed = useIsHeaderFixed(route, isMobile.value);
 const headerGradient = useHasHeaderGradient(route);
 
 const { data: storeData } = await useFetch("/api/locationinfo");
-console.log(storeData.value);
 useHead({
   bodyAttrs: {
     class: computed(() =>

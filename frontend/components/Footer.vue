@@ -50,7 +50,7 @@
       class="flex w-full flex-col items-start lg:mb-40 lg:flex lg:flex-row lg:justify-between"
     >
       <a href="/" class="mb-16 self-center lg:mb-0 lg:mr-36 lg:self-start">
-        <img :src="logoWhite" alt="Regional Home" class="lg:w-[200px]" />
+        <img :src="currentLogo" alt="Regional Home" class="lg:w-[200px]" />
       </a>
       <div class="mb-6 lg:mb-0">
         <h4>Address</h4>
@@ -107,8 +107,6 @@
   </footer>
 </template>
 <script setup>
-import logoWhite from "~/assets/images/logo-white.svg";
-
 const props = defineProps({
   storeData: {
     type: Object,
@@ -146,4 +144,27 @@ const footerLinks = [
     link: "privacy",
   },
 ];
+
+const currentLogo = computed(() => {
+  const config = useRuntimeConfig();
+  const theme = config.public.theme;
+  let logoPath;
+
+  switch (theme) {
+    case "regional":
+      logoPath = "/logos/regional-logo-white.svg";
+      break;
+    case "Town and Country":
+      logoPath = "/logos/tc-logo-white.svg";
+      break;
+    case "brandC":
+      logoPath = "/logos/logo-brandC-white.svg";
+      break;
+    default:
+      logoPath = "/logos/default-logo.svg"; // You can set a default logo if needed
+      break;
+  }
+
+  return logoPath;
+});
 </script>

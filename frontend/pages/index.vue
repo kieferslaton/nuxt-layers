@@ -1,8 +1,8 @@
 <template>
   <section
-    class="flex h-screen w-full flex-col items-center justify-between bg-[length:400vw] px-row pb-4 pt-36 lg:justify-start lg:bg-cover lg:pt-60"
+    class="flex h-screen w-full flex-col items-center justify-between from-transparent from-90% to-primary bg-[length:400vw] px-row pb-4 pt-36 lg:justify-start lg:bg-cover lg:pt-60"
     style="
-      background-image: linear-gradient(to bottom, transparent 90%, #234c5c),
+      background-image: linear-gradient(to bottom, var(--tw-gradient-stops)),
         url('/images/homepage-hero.jpg');
       background-position: 35% 0;
     "
@@ -82,9 +82,7 @@
           <div
             class="mx-2 h-[12px] w-[12px] rounded-full"
             @click="() => swiperRef.slideTo(index)"
-            :class="
-              index === currentSwiperIndex ? 'bg-white' : 'bg-primary-dark'
-            "
+            :class="index === currentSwiperIndex ? 'bg-white' : 'bg-black/30'"
             v-for="(home, index) in homes"
             :key="index"
           ></div>
