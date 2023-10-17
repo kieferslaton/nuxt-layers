@@ -44,7 +44,7 @@
 <script setup>
 import gsap from "gsap";
 
-const showNav = ref(true);
+const showNav = ref(false);
 const props = defineProps({
   isDark: Boolean,
   isHeaderFixed: Boolean,

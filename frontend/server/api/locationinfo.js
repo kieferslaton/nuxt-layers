@@ -14,5 +14,6 @@ export default defineEventHandler(async (event) => {
     zip: data.store.zipCode,
     email: data.store.email,
     phone: data.store.officePhone,
+    deliversTo: data.store.deliveryStates
   };
 });

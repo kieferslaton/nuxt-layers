@@ -8,14 +8,14 @@
     <span
       v-if="parentTitle"
       class="smallcaps mr-2 font-display text-[0.65rem] font-bold tracking-[0.25rem] text-gray-lighter"
-      >{{ parentTitle }}</span
+      >{{ parentTitle.length > 10 ? "..." : parentTitle }}</span
     >
     <span
       class="mr-3 h-[3px] w-[3px] -rotate-45 border-b border-r border-gray-lighter"
     ></span>
     <span
       class="smallcaps font-display text-[0.65rem] font-light tracking-[0.25rem] text-gray-lighter"
-      >{{ title.length > 10 ? "..." : title }}</span
+      >{{ title }}</span
     >
   </span>
 </template>
@@ -23,14 +23,17 @@
 const title = ref("");
 const parentTitle = ref(null);
 const route = useRoute();
-const pathArr = route.path.split("/").splice(1);
+const normalizedPath = route.path.endsWith('/') ? route.path.slice(0, -1) : route.path;
+const pathArr = normalizedPath.split("/").splice(1);
+
 if (pathArr.length > 1) {
-  title.value = pathArr[pathArr.length - 1];
-  parentTitle.value = pathArr[pathArr.length - 2];
+  title.value = pathArr[pathArr.length - 1].replace(/-/g, " ");
+  console.log(title.value)
+  parentTitle.value = pathArr[pathArr.length - 2].replace(/-/g, " ");
+  console.log(parentTitle.value)
 } else {
-  title.value = pathArr[0];
+  title.value = pathArr[0].replace(/-/g, " ");
 }
-console.log(pathArr);
 const props = defineProps({
   classes: {
     type: String,

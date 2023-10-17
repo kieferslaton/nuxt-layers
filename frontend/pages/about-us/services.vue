@@ -24,5 +24,4 @@
 </template>
 <script setup>
 const services = await getServices();
-console.log(services);
 </script>
