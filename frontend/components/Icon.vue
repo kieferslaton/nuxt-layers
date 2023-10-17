@@ -1,5 +1,4 @@
 <template>
-  <!--TODO - Figure out how we want to handle these icons -->
   <span
     :class="[
       filled ? 'material-icons' : 'material-symbols-outlined',

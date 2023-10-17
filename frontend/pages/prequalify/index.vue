@@ -80,8 +80,6 @@ const formData = reactive({
   salesPerson: "no",
   referral: "",
   newsletter: false,
-  //TODO: Specific Home
-  //TODO: Social
 });
 
 const rules = {

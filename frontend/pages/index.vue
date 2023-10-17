@@ -1,20 +1,20 @@
 <template>
   <section
+    v-if="pageData"
     class="flex h-screen w-full flex-col items-center justify-between from-transparent from-90% to-primary bg-[length:400vw] px-row pb-4 pt-36 lg:justify-start lg:bg-cover lg:pt-60"
-    style="
-      background-image: linear-gradient(to bottom, var(--tw-gradient-stops)),
-        url('/images/homepage-hero.jpg');
-      background-position: 35% 0;
-    "
+    style="background-position: 35% 0"
+    :style="{
+      backgroundImage: `url('${pageData.featuredImage.node.sourceUrl}')`,
+    }"
   >
     <div class="relative z-20">
       <h1 class="text-center lg:w-[28rem]">
-        You Spoke.<br />
-        <span class="font-script text-7xl text-secondary lg:text-9xl"
-          >We Listened.</span
-        >
+        {{ pageData.homepage.heroHeadline.normal }}<br />
+        <span class="font-script text-7xl text-secondary lg:text-9xl">{{
+          pageData.homepage.heroHeadline.script
+        }}</span>
       </h1>
-      <p>3 bed, 2 bath homes starting at $48,900.</p>
+      <p>{{ pageData.homepage.heroHeadline.subheader }}</p>
     </div>
     <NuxtLink class="btn btn-secondary btn-full" to="/find-a-home">
       Search For A Home
@@ -26,9 +26,9 @@
   >
     <h4 class="smallcaps mb-4 text-gray-light">Our Mission</h4>
     <h2 class="mb-6 lg:w-[55vw]">
-      Make your home buying experience easy and enjoyable
+      {{ pageData.homepage.mission.header }}
     </h2>
-    <h5 class="mb-16">Check out our featured homes.</h5>
+    <h5 class="mb-16">{{ pageData.homepage.mission.subheader }}</h5>
     <div class="relative -mx-row lg:-mr-row2x lg:ml-0">
       <div
         class="absolute right-full top-0 hidden h-full w-[10vw] flex-col items-center justify-center gap-5 lg:flex"
@@ -95,7 +95,9 @@
   >
     <section
       class="flex flex-col items-center bg-[length:250%] bg-bottom bg-no-repeat px-16 pb-96 pt-20 lg:h-[50vw] lg:w-[45vw] lg:bg-cover"
-      style="background-image: url('/images/home-homebuyers.png')"
+      :style="{
+        backgroundImage: `url('${pageData.homepage.homebuyersGuide.background.sourceUrl}')`,
+      }"
     >
       <h2
         class="mb-5 text-center uppercase tracking-wider text-gray-dark lg:w-60"
@@ -105,10 +107,13 @@
         Home Buyer's Guide
       </h2>
       <p class="mb-7 text-center lg:w-80">
-        A step-by-step guide to help simplify your home buying experience.
+        {{ pageData.homepage.homebuyersGuide.subheader }}
       </p>
-      <a href="/" class="btn btn-secondary">Start Learning Now</a>
+      <NuxtLink href="/homebuyers-guide" class="btn btn-secondary"
+        >Start Learning Now</NuxtLink
+      >
     </section>
+    <!-- TODO: Need Deals -->
     <section class="bg-primary px-row py-10 lg:w-[30vw] lg:p-0">
       <DealCard
         header="Save 10 - 20K"
@@ -120,10 +125,16 @@
   </div>
 </template>
 <script setup>
+//Imports
 import { Swiper, SwiperSlide, useSwiper } from "swiper/vue";
 import "swiper/swiper-bundle.css";
-const { data } = await useFetch("/api/homes?page=1&perPage=3");
-const homes = data.value.items;
+
+//Data Fetch
+const { data: pageData } = await getHome();
+const { data: homeData } = await useFetch("/api/homes?page=1&perPage=3");
+const homes = homeData.value.items;
+
+//Swiper
 const spaceBetween = ref(0);
 const slidesOffset = ref(0);
 const currentSwiperIndex = ref(0);

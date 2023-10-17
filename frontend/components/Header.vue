@@ -34,19 +34,26 @@
     </button>
   </header>
   <Transition @enter="onMobileNavEnter" @leave="onMobileNavLeave">
-    <MobileNav @close="() => (showNav = false)" v-if="showNav" />
+    <MobileNav
+      @close="() => (showNav = false)"
+      v-if="showNav"
+      :menuItems="menuItems"
+    />
   </Transition>
 </template>
 <script setup>
 import gsap from "gsap";
 
-const showNav = ref(false);
+const showNav = ref(true);
 const props = defineProps({
   isDark: Boolean,
   isHeaderFixed: Boolean,
   headerGradient: Boolean,
   currentItem: String,
 });
+
+const { data: menuItems } = await getMenu();
+console.log(menuItems);
 
 const headerStyle = computed(() => {
   return props.isHeaderFixed
@@ -62,7 +69,6 @@ function onMobileNavEnter(el) {
 }
 
 function onMobileNavLeave(el, done) {
-  console.log(el);
   gsap.to(el, {
     opacity: 0,
     duration: 0.25,
@@ -74,8 +80,6 @@ const currentLogo = computed(() => {
   const config = useRuntimeConfig();
   const theme = config.public.theme;
   let logoPath;
-
-  console.log(theme);
 
   switch (theme) {
     case "Regional":
