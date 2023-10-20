@@ -1,4 +1,7 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
+import gql from "graphql-tag";
+import { print } from "graphql";
+
 export default defineNuxtConfig({
   app: {
     head: {
@@ -44,6 +47,38 @@ export default defineNuxtConfig({
       const routes = [];
       const config = useRuntimeConfig();
 
+      const GET_PAGES = gql`
+        query GetPages {
+          pages {
+            edges {
+              node {
+                uri
+              }
+            }
+          }
+        }
+      `;
+
+      const { data: pages } = await useFetch(
+        config.public.wordpressParentApiUrl,
+        {
+          key: "pages",
+          method: "post",
+          body: {
+            query: print(GET_PAGES),
+          },
+          transform(data) {
+            return data.data.pages.edges.map((edge) => edge.node);
+          },
+        }
+      );
+
+      if (pages.value) {
+        pages.value.forEach((page) => {
+          routes.push(page.uri);
+        });
+      }
+
       const storeData = await $fetch(config.public.regionalApiUrl);
 
       if (storeData) {
@@ -62,60 +97,21 @@ export default defineNuxtConfig({
           }
         }
       }
-
-      const wpQuery = gql`
-        query RoutesQuery {
-          agents {
-            edges {
-              node {
-                uri
-                title(format: RENDERED)
-                agentFields {
-                  agentEmail
-                  agentPhone
-                  agentVideo
-                  agentSocial {
-                    socialLink
-                    socialPlatform
-                  }
-                }
-              }
-            }
-          }
-        }
-      `;
-
-      const { data: wpData } = await useFetch(
-        config.public.wordpressParentApiUrl,
-        {
-          key: "routes",
-          method: "post",
-          body: {
-            query: print(wpQuery),
-          },
-          transform(data) {
-            return data.data;
-          },
-        }
-      );
-
-      if (wpData) {
-        if (wpData.agents) {
-          wpData.agents.edges.forEach((edge) => {
-            routes.push(`/agent/${edge.node.uri}`);
-          });
-        }
-      }
     },
   },
 
-  modules: ["@nuxtjs/tailwindcss", "@nuxt/image"],
+  modules: ["@nuxtjs/tailwindcss", "@nuxt/image", "nuxt-swiper"],
+  swiper: {
+    swiper: {
+      modules: ["navigation"],
+    },
+  },
   imports: {
     dirs: ["composables", "composables/*/**"],
   },
 
   devtools: {
-    enabled: true,
+    enabled: false,
   },
   devServer: {
     host: "0.0.0.0",

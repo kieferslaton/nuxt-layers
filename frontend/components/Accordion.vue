@@ -13,6 +13,7 @@
     />
   </div>
 </template>
+
 <script setup>
 const setOpenItem = (index) => (openItem.value = index);
 const props = defineProps({

@@ -15,10 +15,10 @@
     "
   ></section>
   <header
-    class="masthead relative flex items-center justify-between p-row lg:relative lg:px-row2x lg:pt-14"
+    class="masthead relative flex items-center justify-between p-row lg:relative lg:h-[150px] lg:px-row2x lg:py-0"
     :style="headerStyle"
   >
-    <NuxtLink to="/" class="lg:left-row2x lg:absolute">
+    <NuxtLink to="/" class="lg:left-row2x self-center lg:absolute">
       <img :src="currentLogo" alt="Logo" class="lg:w-[200px]" />
     </NuxtLink>
     <Nav class="hidden lg:flex" :currentItem="currentItem" />
@@ -53,7 +53,7 @@ const props = defineProps({
 });
 
 const { data: menuItems } = await getMenu();
-console.log(menuItems);
+//console.log(menuItems);
 
 const headerStyle = computed(() => {
   return props.isHeaderFixed

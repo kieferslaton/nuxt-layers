@@ -1,8 +1,8 @@
 <template>
-  <div class="home-single lg:px-row2x" v-if="home">
+  <div class="home-single" v-if="home">
     <section
       @click="() => (showImagesModal = true)"
-      class="relative z-0 h-[140vw] w-full bg-cover bg-bottom lg:h-[640px]"
+      class="relative z-0 h-[70vh] w-full bg-cover bg-center tl:h-[75vh]"
       :style="{
         backgroundImage: `linear-gradient(to bottom, transparent, rgba(0,0,0,0.3)), url('${home.defaultImageUrl}')`,
       }"
@@ -16,7 +16,7 @@
       </button>
     </section>
     <section
-      class="border-b border-primary bg-primary px-row pb-10 pt-12 text-white lg:-mt-10 lg:flex lg:items-end lg:justify-between lg:bg-transparent lg:pt-0"
+      class="border-b border-primary bg-primary px-row pb-10 pt-12 text-white lg:flex lg:items-end lg:justify-between lg:bg-transparent lg:px-row2x"
     >
       <div>
         <h2 class="mb-4 lg:text-7xl">{{ home.name }}</h2>
@@ -31,7 +31,7 @@
           <span class="font-bold">{{ home.category }}</span>
         </div>
       </div>
-      <div class="flex w-full gap-5 lg:w-auto">
+      <div class="flex w-full justify-between gap-5 lg:w-auto">
         <a href="" class="btn btn-secondary flex flex-1 items-center">
           <Icon name="phone" size="20" color="white" filled class="mr-3" />
           Call Us
@@ -43,9 +43,9 @@
       </div>
     </section>
     <section
-      class="flex flex-col items-center bg-primary px-row pb-20 pt-10 lg:px-0"
+      class="flex flex-col items-center bg-primary px-row pb-20 pt-10 lg:px-row2x"
     >
-      <div class="mb-20 rounded bg-white px-row py-row lg:px-row2x">
+      <div class="mb-20 rounded bg-white px-row py-row">
         <div class="flex flex-col lg:flex-row-reverse lg:gap-20">
           <img
             src="/images/home-single-illo.png"
@@ -104,7 +104,15 @@
       v-if="showImagesModal"
     >
       <ClientOnly>
-        <Swiper class="h-full" @slideChange="onSlideChange">
+        <Swiper
+          class="relative h-full"
+          @slideChange="onSlideChange"
+          :modules="[SwiperNavigation]"
+          :navigation="{
+            nextEl: '.swiper-btn-next',
+            prevEl: '.swiper-btn-prev',
+          }"
+        >
           <SwiperSlide
             v-for="image in home.images"
             :key="image"
@@ -114,23 +122,39 @@
             <img :src="image.url" class="mb-row" />
             <p class="ml-row text-white">{{ image.description }}</p>
           </SwiperSlide>
+          <div
+            class="swiper-btn-next absolute right-4 top-1/2 z-10 hidden h-14 w-14 items-center justify-center rounded-full bg-gray-dark tp:flex"
+          >
+            <Icon name="arrow_forward_ios" size="20" color="white" />
+          </div>
+          <div
+            class="swiper-btn-prev absolute left-4 top-1/2 z-10 hidden h-14 w-14 items-center justify-center rounded-full bg-gray-dark tp:flex"
+          >
+            <Icon
+              name="arrow_back_ios"
+              size="20"
+              color="white"
+              class="ml-[0.4rem]"
+            />
+          </div>
         </Swiper>
       </ClientOnly>
       <div
-        class="absolute bottom-4 left-1/2 flex -translate-x-1/2 items-center justify-center rounded px-4 py-2 text-xs tracking-widest"
+        class="absolute bottom-4 left-1/2 z-30 flex -translate-x-1/2 items-center justify-center rounded px-4 py-2 text-xs tracking-widest lg:bg-gray-dark"
       >
         <Icon name="image" size="12" color="white" class="mr-2" filled />
         {{ currentImageSlide }} / {{ home.images.length }}
       </div>
       <button
-        class="absolute right-10 top-10 z-30"
+        class="absolute right-6 top-6 z-30 flex h-10 w-10 items-center justify-center rounded-full bg-secondary/70 transition-colors hover:bg-secondary/100"
         @click="() => (showImagesModal = false)"
       >
-        <Icon name="close" size="30" color="white" />
+        <Icon name="close" size="20" color="white" />
       </button>
     </div>
   </div>
 </template>
+
 <script setup>
 import { Swiper, SwiperSlide } from "swiper/vue";
 import "swiper/swiper-bundle.css";

@@ -88,6 +88,17 @@ module.exports = {
       gridColumnSpan: {
         // add as needed
       },
+      screens: {
+        tp: "600px",
+        tl: "900px",
+        d: "1200px",
+        dl: "1600px",
+      },
+      container: {
+        screens: {
+          tl: "1065px",
+        },
+      },
     },
   },
   plugins: [],

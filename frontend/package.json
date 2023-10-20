@@ -30,6 +30,7 @@
     "graphql-tag": "^2.12.6",
     "gsap": "^3.12.2",
     "hls.js": "^1.4.12",
+    "nuxt-swiper": "^1.2.2",
     "plyr": "^3.7.8",
     "sass": "^1.69.3",
     "sass-loader": "^13.2.2",

@@ -35,5 +35,7 @@ export default async function () {
     }
   );
 
+  console.log(data.value.faq.faqs);
+
   return data.value.faq.faqs;
 }

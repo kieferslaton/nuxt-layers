@@ -1,5 +1,6 @@
 <template>
   <span
+    class="flex items-center justify-center"
     :class="[
       filled ? 'material-icons' : 'material-symbols-outlined',
       `text-${color}`,

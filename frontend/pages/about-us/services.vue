@@ -1,9 +1,9 @@
 <template>
   <section
-    class="relative flex aspect-square items-center justify-center border-b border-b-primary-lighter bg-cover"
+    class="relative flex h-[70vh] items-center justify-center border-b border-b-primary-lighter bg-cover bg-bottom bg-no-repeat"
     style="background-image: url('/images/services-hero.png')"
   >
-    <h1>Services</h1>
+    <h1 class="text-white">Services</h1>
     <Breadcrumb classes="absolute bottom-0 left-4" />
   </section>
   <section class="px-row py-8">

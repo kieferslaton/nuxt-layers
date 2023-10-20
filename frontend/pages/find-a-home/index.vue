@@ -20,16 +20,18 @@
       />
     </div>
     <div
-      class="homes px-row lg:px-row2x lg:pt-16"
+      class="homes px-row lg:px-row2x lg:!pt-10"
       v-if="homes && homes.length > 0"
       ref="homesList"
       :style="
         loading || !firstImageLoaded
           ? 'visibility: hidden; height: 0; overflow-y: hidden;'
-          : 'padding-top: 10vw;'
+          : 'padding-top: 5vw;'
       "
     >
-      <div class="mb-row flex items-center justify-between lg:flex-wrap">
+      <div
+        class="mb-row flex items-center justify-between lg:mb-10 lg:flex-wrap"
+      >
         <span class="smallcaps text-gray-light"
           >{{ totalRecords }} Results</span
         >
