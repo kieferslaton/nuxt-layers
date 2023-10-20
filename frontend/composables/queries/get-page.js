@@ -16,24 +16,19 @@ export default async function (uri) {
     }
   `;
 
-  const { data, refresh, pending, error } = await useFetch(
-    config.public.wordpressParentApiUrl,
-    {
-      key: uri,
-      method: "post",
-      body: {
-        query: print(GET_PAGE),
-        variables: {
-          uri: uri,
-        },
+  const { data } = await useFetch(config.public.wordpressParentApiUrl, {
+    key: uri,
+    method: "post",
+    body: {
+      query: print(GET_PAGE),
+      variables: {
+        uri: uri,
       },
-      transform(data) {
-        return data.data.nodeByUri;
-      },
-    }
-  );
-
-  console.log(data);
+    },
+    transform(data) {
+      return data.data.nodeByUri;
+    },
+  });
 
   return {
     title: data.value.title,

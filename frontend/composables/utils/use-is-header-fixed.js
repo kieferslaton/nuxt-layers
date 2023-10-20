@@ -1,6 +1,7 @@
 export default function (route, isMobile) {
   let isHeaderFixed = computed(() => {
     return (
+      route.name === "uri" ||
       route.name === "index" ||
       route.name === "faqs" ||
       route.name === "about-services" ||

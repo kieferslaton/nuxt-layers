@@ -6,16 +6,6 @@
     <h1>FAQs</h1>
     <Breadcrumb title="FAQs" classes="absolute bottom-0 left-4" />
   </section>
-
-  <tr v-for="route in $router.options.routes">
-    <td>
-      <nuxt-link :to="route.path">{{ route.name }}</nuxt-link>
-    </td>
-    <td>
-      <nuxt-link :to="route.path">{{ route.path }}</nuxt-link>
-    </td>
-  </tr>
-
   <section class="tl:mx-auto tl:max-w-[800px]">
     <Accordion
       :items="
@@ -37,5 +27,4 @@
 
 <script setup>
 const faqs = await getFaqs();
-const pages = await getPages();
 </script>
