@@ -52,6 +52,5 @@ export default async function (numberPosts = 10, after = null) {
       },
     }
   );
-
   return data.value;
 }

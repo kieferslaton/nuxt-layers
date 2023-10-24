@@ -18,7 +18,7 @@
       >
         <nuxt-link
           class="smallcaps font-medium"
-          :to="item.toLowerCase().replaceAll(' ', '-')"
+          :to="'/' + item.toLowerCase().replaceAll(' ', '-')"
         >
           {{ item }}
         </nuxt-link>

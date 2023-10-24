@@ -3,12 +3,14 @@
     <Breadcrumb />
   </div>
   <div class="border-b border-primary-lighter pb-20">
-    <img
-      :src="post.featuredImage?.node?.sourceUrl"
-      :alt="post.featuredImage?.node?.altText"
-      class="mb-4 aspect-auto w-full rounded-none"
-    />
-    <div class="px-row">
+    <div class="mb-4 h-[65vh] overflow-hidden">
+      <img
+        :src="post.featuredImage?.node?.sourceUrl"
+        :alt="post.featuredImage?.node?.altText"
+        class="h-full w-full rounded-none object-cover"
+      />
+    </div>
+    <div class="px-row d:px-row2x">
       <div class="mb-4 flex text-[0.85rem]">
         <a href="/" class="text-white underline">{{
           post.categories?.edges[0].node?.name

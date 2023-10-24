@@ -6,9 +6,12 @@
     <h1 class="text-white">{{ title }}</h1>
     <Breadcrumb title="FAQs" classes="absolute bottom-0 left-4" />
   </section>
-  <div class="px-row d:px-row2x">
-    <div v-html="content" class="prose"></div>
-  </div>
+  <section class="bg-primary px-row pt-10 d:px-row2x">
+    <div
+      v-html="content"
+      class="prose rounded bg-white px-row py-row2x tl:py-row"
+    ></div>
+  </section>
 </template>
 
 <script setup>
