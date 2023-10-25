@@ -7,8 +7,8 @@
     class="post flex flex-col border-b border-primary-lighter px-row pb-20 tl:flex-row tl:gap-8 lg:px-row2x"
   >
     <img
-      :src="recentPost.featuredImage?.node?.sourceUrl"
-      :alt="recentPost.featuredImage?.node?.altText"
+      :src="featuredPost.featuredImage?.node?.sourceUrl"
+      :alt="featuredPost.featuredImage?.node?.altText"
       class="mb-6 w-full rounded-sm tl:w-1/2"
     />
     <div
@@ -16,23 +16,23 @@
     >
       <div class="mb-6 flex text-[0.85rem]">
         <a href="/" class="text-white underline">{{
-          recentPost.categories?.edges[0].node?.name
+          featuredPost.categories?.edges[0].node?.name
         }}</a>
         <span class="mx-2 text-white">|</span>
         <span>{{
-          recentPost.date
+          featuredPost.date
             ? Intl.DateTimeFormat("en-US", {
                 month: "short",
                 day: "numeric",
                 year: "numeric",
-              }).format(new Date(recentPost.date))
+              }).format(new Date(featuredPost.date))
             : ""
         }}</span>
       </div>
-      <h2 class="mb-8 text-4xl">{{ recentPost.title }}</h2>
+      <h2 class="mb-8 text-4xl">{{ featuredPost.title }}</h2>
       <a
         class="btn btn-transparent self-start"
-        :href="`/blog/${recentPost.slug}`"
+        :href="`/blog/${featuredPost.slug}`"
         >Continue Reading</a
       >
     </div>
@@ -45,7 +45,7 @@
       <button
         class="mr-3 flex items-center rounded-md border border-primary-light px-5 py-2"
         :class="selectedCategory === '' ? 'border-none bg-secondary' : ''"
-        @click="filterPosts('')"
+        @click="selectedCategory = ''"
       >
         All
       </button>
@@ -56,7 +56,7 @@
         "
         v-for="category in categories"
         :index="category.name"
-        @click="filterPosts(category.name)"
+        @click="selectedCategory = category.name"
       >
         {{ category.name }}
       </button>
@@ -66,7 +66,7 @@
       class="posts__grid grid grid-cols-1 gap-8 tp:grid-cols-2 d:grid-cols-3"
     >
       <div
-        v-for="post in displayedPosts"
+        v-for="post in posts"
         :index="post.slug"
         class="posts__grid-item overflow-hidden rounded bg-primary-light"
       >
@@ -97,7 +97,7 @@
     </div>
     <!-- End Posts Grid -->
     <button
-      v-if="hasNextPage"
+      v-if="nextPage"
       @click="loadMore"
       class="mb-2 mr-2 mt-12 rounded-md bg-secondary px-5 py-2.5 text-sm font-medium text-white"
     >
@@ -107,19 +107,16 @@
 </template>
 
 <script setup>
-import gsap from "gsap";
 import gql from "graphql-tag";
 import { print } from "graphql";
 
-const config = useRuntimeConfig();
-
-const apiUrl = config.public.wordpressParentApiUrl;
-const displayedPosts = ref([]);
+const apiUrl = useRuntimeConfig().public.wordpressParentApiUrl;
 const limit = ref(1);
-const hasNextPage = ref(false);
+const cursor = ref(null);
+const nextPage = ref(false);
 const selectedCategory = ref("");
 
-// Get categories
+// GET CATEGORIES
 const GET_CATEGORIES = gql`
   query CategoriesQuery {
     categories {
@@ -131,19 +128,18 @@ const GET_CATEGORIES = gql`
     }
   }
 `;
-const categoriesData = await $fetch(apiUrl, {
+const categoryData = await $fetch(apiUrl, {
   key: "categories",
   method: "post",
   body: {
     query: print(GET_CATEGORIES),
   },
 });
-
-const categories = categoriesData.data.categories.edges
+const categories = categoryData.data.categories.edges
   .map((edge) => edge.node)
   .filter((node) => node.name !== "Uncategorized");
 
-// Query posts
+// GET POSTS
 const GET_POSTS = gql`
   query getPosts($limit: Int!, $cursor: String, $category: String) {
     posts(first: $limit, after: $cursor, where: { categoryName: $category }) {
@@ -172,9 +168,8 @@ const GET_POSTS = gql`
     }
   }
 `;
-
-// Fetch & display most recent post
-const recentPostData = await $fetch(apiUrl, {
+// FEATURED POST
+const featuredPostData = await $fetch(apiUrl, {
   key: "posts",
   method: "post",
   body: {
@@ -184,206 +179,62 @@ const recentPostData = await $fetch(apiUrl, {
     },
   },
 });
-const recentPost = recentPostData.data.posts.nodes[0];
+const featuredPost = featuredPostData.data.posts.nodes[0];
+cursor.value = featuredPostData.data.posts.pageInfo.endCursor;
+nextPage.value = featuredPostData.data.posts.pageInfo.hasNextPage;
 
-// Fetch the rest of the posts
-const recentPostCursor = recentPostData.data.posts.pageInfo.endCursor;
-const endCursor = ref(recentPostCursor);
-
-const fetchPosts = async (cursor) => {
-  const postData = await $fetch(apiUrl, {
-    key: "posts",
-    method: "post",
-    body: {
-      query: print(GET_POSTS),
-      variables: {
-        limit: limit.value,
-        cursor: endCursor.value,
-        category: selectedCategory.value,
-      },
+// POSTS
+const posts = ref([]);
+const { data: postData } = await useFetch(apiUrl, {
+  method: "get",
+  query: {
+    query: print(GET_POSTS),
+    variables: {
+      limit,
+      cursor,
+      category: selectedCategory,
     },
-  });
-  return postData.data.posts;
-};
-
-// Display inital posts
-onMounted(async () => {
-  const postsData = await fetchPosts(endCursor.value);
-  displayedPosts.value = postsData.nodes;
-  resetCursor(postsData);
-});
-
-// Filter posts
-const filterPosts = async (cat) => {
-  selectedCategory.value = cat;
-  endCursor.value = recentPostCursor;
-  const filteredPosts = await fetchPosts(endCursor.value);
-  displayedPosts.value = filteredPosts.nodes;
-  resetCursor(filteredPosts);
-  gsap.fromTo(
-    ".posts__grid",
-    {
-      opacity: 0,
-    },
-    {
-      opacity: 1,
-      duration: 0.6,
-    }
-  );
-};
-
-// Display more posts
-const loadMore = async () => {
-  const morePostsData = await fetchPosts(endCursor.value);
-  displayedPosts.value.push(...morePostsData.nodes);
-  resetCursor(morePostsData);
-};
-
-const resetCursor = (el) => {
-  hasNextPage.value = el.pageInfo.hasNextPage;
-  endCursor.value = el.pageInfo.endCursor;
-};
-
-/*
-// Get Featured Post
-const GET_RECENT_POST = gql`
-  query PostsQuery {
-    posts(first: 1) {
-      edges {
-        cursor
-        node {
-          title(format: RENDERED)
-          excerpt(format: RENDERED)
-          date
-          slug
-          featuredImage {
-            node {
-              altText
-              sourceUrl(size: LARGE)
-            }
-          }
-          categories {
-            edges {
-              node {
-                name
-              }
-            }
-          }
-        }
-      }
-    }
-  }
-`;
-
-const featuredPostData = await $fetch(config.public.wordpressParentApiUrl, {
-  key: "featuredPost",
-  method: "post",
-  body: {
-    query: print(GET_RECENT_POST),
+  },
+  transform(data) {
+    let postData = data.data.posts;
+    return postData;
   },
 });
 
-const featuredPost = featuredPostData.data.posts.edges[0].node;
-const featuredPostCursor = featuredPostData.data.posts.edges[0].cursor;
-
-// Get Categories
-const GET_CATEGORIES = gql`
-  query CategoriesQuery {
-    categories {
-      edges {
-        node {
-          name
-        }
-      }
-    }
-  }
-`;
-
-const categoriesData = await $fetch(config.public.wordpressParentApiUrl, {
-  key: "categories",
-  method: "post",
-  body: {
-    query: print(GET_CATEGORIES),
+watch(
+  postData,
+  () => {
+    posts.value = [...posts.value, ...postData.value.nodes];
+    nextPage.value = postData.value.pageInfo.hasNextPage;
   },
+  {
+    deep: true,
+    immediate: true,
+  }
+);
+
+watch(selectedCategory, () => {
+  posts.value = [];
+  cursor.value = featuredPostData.data.posts.pageInfo.endCursor;
 });
 
-const categories = categoriesData.data.categories.edges
-  .map((edge) => edge.node)
-  .filter((node) => node.name !== "Uncategorized");
-
-const selectedCategory = ref("");
-
-const fetchPosts = async (cursor = "") => {
-  const { data: posts, pending } = await useFetch(
-    config.public.wordpressParentApiUrl,
-    {
-      key: "posts",
-      method: "get",
-      watch: [selectedCategory],
-      query: {
-        query: `
-          query PostsQuery($cursor: String, $category: String) {
-            posts(first: 2, after: $cursor, where: { categoryName: $category }) {
-              edges {
-                cursor
-                node {
-                  title(format: RENDERED)
-                  content(format: RENDERED)
-                  date
-                  slug
-                  featuredImage {
-                    node {
-                      altText
-                      sourceUrl(size: LARGE)
-                    }
-                  }
-                  categories {
-                    edges {
-                      node {
-                        name
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-        `,
-        variables: {
-          cursor: featuredPostCursor,
-          category: selectedCategory.value,
-        },
-      },
-      transform(data) {
-        let posts = data.data.posts.edges.map((edge) => edge.node);
-
-        if (selectedCategory.value === "") return posts;
-
-        let filteredPosts = posts.filter(
-          (post) =>
-            post.categories.edges.filter(
-              (category) => category.node.name === selectedCategory.value
-            ).length
-        );
-        return filteredPosts;
-      },
-    }
-  );
+const loadMore = () => {
+  cursor.value = postData.value.pageInfo.endCursor;
 };
-*/
 </script>
 
 <style>
 .posts__grid-item {
-  animation: 0.6s ease-out forwards fadeIn;
+  animation: 0.4s fadeIn ease-out forwards;
 }
-
 @keyframes fadeIn {
   0% {
     opacity: 0;
+    transform: translateY(30px);
   }
   100% {
     opacity: 1;
+    transform: translateY(0);
   }
 }
 </style>

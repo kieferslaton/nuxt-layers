@@ -100,7 +100,17 @@ export default defineNuxtConfig({
     },
   },
 
-  modules: ["@nuxtjs/tailwindcss", "@nuxt/image", "nuxt-swiper"],
+  modules: [
+    "@nuxtjs/tailwindcss",
+    "@nuxt/image",
+    "nuxt-swiper",
+    "nuxt-schema-org",
+  ],
+  schemaOrg: {
+    meta: {
+      host: "http://localhost:3000",
+    },
+  },
   swiper: {
     swiper: {
       modules: ["navigation"],

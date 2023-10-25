@@ -163,6 +163,65 @@ const route = useRoute();
 const isMobile = useIsMobile();
 const { data: home } = await useFetch(`/api/home?name=${route.params.name}`);
 
+console.log(home.value);
+
+useSeoMeta({});
+
+useSchemaOrg([
+  defineWebPage({
+    headline: home.value.title,
+    description: home.value.description,
+    primaryImageOfPage: home.value.defaultImageUrl,
+  }),
+  defineProduct({
+    brand: "Regional Homes",
+    description: home.value.description,
+    additonalProperty:
+      home.value.beds +
+      " bed, " +
+      home.value.baths +
+      " bath, " +
+      home.value.width +
+      " x " +
+      home.value.length +
+      ", Built by " +
+      home.value.manufacturerName,
+  }),
+  defineItemList({
+    itemListElement: [
+      {
+        name: home.value.beds + " beds",
+      },
+      {
+        name: home.value.baths + " baths",
+      },
+      {
+        name: home.value.width + "' width",
+      },
+      {
+        name: home.value.length + "' length",
+      },
+      {
+        name: "Built by " + home.value.manufacturerName,
+      },
+    ],
+  }),
+  defineWebSite({
+    name: "Regional Homes - America’s #1 Independent Manufactured Housing Dealer",
+    url: "https://regionalhomes.net/",
+  }),
+  defineOrganization({
+    name: "Regional Homes",
+    url: "https://regionalhomes.net/",
+    keywords:
+      "mobile homes, modular homes, manufactured homes, prefabricated homes, trailer homes, used mobile homes, mobile home dealers, double wide mobile homes, double wide trailers, new mobile homes, single wide mobile homes, triple wide mobile homes",
+  }),
+  defineAddress({
+    city: "Pearl",
+    state: "MS",
+  }),
+]);
+
 const showImagesModal = ref(false);
 const currentImageSlide = ref(1);
 
