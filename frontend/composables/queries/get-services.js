@@ -10,12 +10,8 @@ export default async function () {
         edges {
           node {
             id
-            services {
-              services {
-                icon
-                title
-                description
-              }
+            availableServices {
+              locationServices
             }
           }
         }
@@ -23,19 +19,42 @@ export default async function () {
     }
   `;
 
-  const { data, refresh, pending, error } = await useFetch(
-    config.public.wordpressParentApiUrl,
-    {
-      key: "services",
-      method: "post",
-      body: {
-        query: print(GET_SERVICES),
-      },
-      transform(data) {
-        return data.data.pages.edges.map((edge) => edge.node)[0];
-      },
+  //Fetch services from store api
+  const serviceIds = await $fetch(config.public.wordpressStoreApiUrl, {
+    method: "post",
+    body: {
+      query: print(GET_SERVICES),
     }
-  );
+  });
 
-  return data.value.services.services;
+  var availableServices = serviceIds.data.pages.edges[0].node.availableServices.locationServices.map(id => parseInt(id));
+
+  var GET_SERVICES_BY_ID = gql`
+  query GetServicesById($ids: [ID!]) {
+    services(where: {in: $ids}) {
+      edges {
+        node {
+          id
+          title(format: RENDERED)
+          servicesFields {
+            icon
+            description
+          }
+        }
+      }
+    }
+  }
+`;
+
+  const services = await $fetch(config.public.wordpressParentApiUrl, {
+    method: "post",
+    body: {
+      query: print(GET_SERVICES_BY_ID),
+      variables: {
+        ids: availableServices
+      }
+    }
+  });
+
+  return services.data.services.edges.map((edge) => edge.node);
 }

@@ -1,11 +1,6 @@
 <template>
   <div>
-    <Header
-      :isDark="isDark"
-      :isHeaderFixed="isHeaderFixed"
-      :headerGradient="headerGradient"
-      :currentItem="route.name"
-    />
+    <Header :isDark="isDark" :isHeaderFixed="isHeaderFixed" :headerGradient="headerGradient" :currentItem="route.name" />
     <NuxtPage />
     <Footer :storeData="storeData" />
   </div>

@@ -1,6 +1,7 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 import gql from "graphql-tag";
 import { print } from "graphql";
+import { resolve } from "path";
 
 export default defineNuxtConfig({
   app: {
@@ -24,6 +25,7 @@ export default defineNuxtConfig({
         {
           src: "https://maps.googleapis.com/maps/api/js?key=AIzaSyCrI98GTvPp-yGlhnVKX2sgGeexccPOKAk&libraries=places",
           defer: true,
+          async: true,
         },
         {
           src: "https://www.youtube.com/iframe_api",
@@ -38,14 +40,18 @@ export default defineNuxtConfig({
     public: {
       regionalApiUrl: process.env.REGIONAL_API_URL || "/api",
       wordpressParentApiUrl: process.env.WORDPRESS_PARENT_API_URL || "/api",
+      wordpressStoreApiUrl: process.env.WORDPRESS_STORE_API_URL || "/api",
       theme: process.env.THEME || "Regional",
+      siteType: process.env.SITE_TYPE || "STORE",
     },
-  },
+  }, 
 
   generate: {
     routes: async () => {
       const routes = [];
       const config = useRuntimeConfig();
+
+      if(!process.env.IS_HQ) {
 
       const GET_PAGES = gql`
         query GetPages {
@@ -59,7 +65,7 @@ export default defineNuxtConfig({
         }
       `;
 
-      const { data: pages } = await useFetch(
+      const { data: parentPages } = await useFetch(
         config.public.wordpressParentApiUrl,
         {
           key: "pages",
@@ -73,10 +79,59 @@ export default defineNuxtConfig({
         }
       );
 
-      if (pages.value) {
-        pages.value.forEach((page) => {
+      const { data: storePages } = await useFetch(
+        config.public.wordpressStoreApiUrl,
+        {
+          key: "pages",
+          method: "post",
+          body: {
+            query: print(GET_PAGES),
+          },
+          transform(data) {
+            return data.data.pages.edges.map((edge) => edge.node);
+          },
+        }
+      );
+
+      var pages = [...new Set([...parentPages.value, ...storePages.value])]
+
+
+      if (pages) {
+        pages.forEach((page) => {
           routes.push(page.uri);
         });
+      }
+
+      const GET_EVENTS = gql`
+      query GetEvents {
+        events {
+          edges {
+            node {
+              slug
+            }
+          }
+        }
+      }
+      `
+
+      const { data: events } = await useFetch(
+        config.public.wordpressStoreApiUrl,
+        {
+          key: "events",
+          method: "post",
+          body: {
+            query: print(GET_EVENTS),
+          },
+          transform(data) {
+            return data.data.events.edges.map((edge) => edge.node);
+          },
+        }
+      );
+
+      if (events.value) {
+        events.value.forEach((event) => {
+          routes.push(`/events/${event.slug}`);
+        })
       }
 
       const storeData = await $fetch(config.public.regionalApiUrl);
@@ -97,6 +152,7 @@ export default defineNuxtConfig({
           }
         }
       }
+    }
     },
   },
 

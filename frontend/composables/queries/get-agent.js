@@ -4,6 +4,8 @@ import { print } from "graphql";
 export default async function (name) {
   const config = useRuntimeConfig();
 
+  console.log('Agent Name: ', name);
+
   const GET_AGENT = gql`
         query {
             agents(where: { name: "${name}" }) {

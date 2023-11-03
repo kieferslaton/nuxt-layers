@@ -34,7 +34,7 @@ const themes = {
 const selectedTheme = process.env.THEME || "Regional";
 
 module.exports = {
-  content: [],
+  content: ['./components/**/*.vue', './layouts/**/*.vue', './pages/**/*.vue'],
   theme: {
     fontFamily: {
       sans: ["neue-haas-grotesk-text", "serif"],
@@ -44,6 +44,19 @@ module.exports = {
       "display-serif": ["kepler-std-display", "sans-serif"],
     },
     extend: {
+      typography: {
+        DEFAULT: {
+        css: {
+          'h2': {
+            fontWeight: 400, 
+            fontSize: '2.5rem',
+          }, 
+          'h3': {
+            fontSize: '1.5rem'
+          }
+        }
+      }
+      }, 
       colors: {
         primary: themes[selectedTheme].primary,
         "primary-light": themes[selectedTheme]["primary-light"],
@@ -101,5 +114,7 @@ module.exports = {
       },
     },
   },
-  plugins: [],
+  plugins: [
+    require("@tailwindcss/typography"),
+  ],
 };

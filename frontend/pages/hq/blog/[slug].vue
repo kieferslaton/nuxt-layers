@@ -4,11 +4,8 @@
   </div>
   <div class="border-b border-primary-lighter pb-20">
     <div class="mb-4 h-[65vh] overflow-hidden">
-      <img
-        :src="post.featuredImage?.node?.sourceUrl"
-        :alt="post.featuredImage?.node?.altText"
-        class="h-full w-full rounded-none object-cover"
-      />
+      <img :src="post.featuredImage?.node?.sourceUrl" :alt="post.featuredImage?.node?.altText"
+        class="h-full w-full rounded-none object-cover" />
     </div>
     <div class="px-row d:px-row2x">
       <div class="mb-4 flex text-[0.85rem]">
@@ -18,27 +15,29 @@
         <span class="mx-2 text-white">|</span>
         <span>{{
           post.date
-            ? Intl.DateTimeFormat("en-US", {
-                month: "short",
-                day: "numeric",
-                year: "numeric",
-              }).format(new Date(post.date))
-            : ""
+          ? Intl.DateTimeFormat("en-US", {
+            month: "short",
+            day: "numeric",
+            year: "numeric",
+          }).format(new Date(post.date))
+          : ""
         }}</span>
       </div>
       <h2 class="mb-6 text-4xl">{{ post.title }}</h2>
-      <div
-        class="wp-content mb-6 rounded bg-primary-light p-row"
-        v-html="post.content"
-      ></div>
+      <div class="wp-content mb-6 rounded bg-primary-light p-row" v-html="post.content"></div>
     </div>
   </div>
 </template>
 <script setup>
 import gql from "graphql-tag";
 import { print } from "graphql";
+import { resolveDirective } from "nuxt/dist/app/compat/capi";
+
+// definePageMeta({
+//   middleware: 
+// })
+
 const route = useRoute();
-console.log(route.params.slug);
 const config = useRuntimeConfig();
 
 const GET_POST = gql`
@@ -78,5 +77,5 @@ const postData = await $fetch(config.public.wordpressParentApiUrl, {
   },
 });
 
-const post = postData.data.posts.edges[0].node;
+const post = postData.data.posts.edges[0].node
 </script>
