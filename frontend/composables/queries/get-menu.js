@@ -34,7 +34,7 @@ export default async function (menuName = "Main Navigation") {
   `;
 
   const { data, refresh, pending, error } = await useFetch(
-    config.public.wordpressParentApiUrl,
+    config.public.siteType === 'STORE' ? config.public.wordpressStoreApiUrl : config.public.wordpressParentApiUrl,
     {
       key: "menu",
       method: "post",
