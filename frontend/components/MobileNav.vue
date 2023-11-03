@@ -12,13 +12,9 @@
       <ul class="mb-16 border-t border-gray-lighter">
         <li v-for="item in menuItems">
           <NuxtLink class="flex items-center justify-between h-24 border-b border-gray-lighter pl-row text-gray-dark"
-            :href="item.node.uri" @click="() => {
-              if (!item.node.childItems?.edges?.length) {
-                $emit('close')
-              }
-            }">
+            :href="item.node.uri" @click="$emit('close')">
             <span class="font-serif text-4xl">{{ item.node.label }}</span>
-            <div @click.prevent="() => {
+            <div @click.stop.prevent="() => {
               item.showSubMenu = !item.showSubMenu;
               console.log(item.showSubMenu)
             }" v-if="item.node.childItems?.edges?.length"
