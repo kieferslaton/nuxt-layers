@@ -1,7 +1,6 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 import gql from "graphql-tag";
 import { print } from "graphql";
-import { resolve } from "path";
 
 export default defineNuxtConfig({
   app: {
@@ -50,8 +49,6 @@ export default defineNuxtConfig({
     routes: async () => {
       const routes = [];
       const config = useRuntimeConfig();
-
-      if(!process.env.IS_HQ) {
 
       const GET_PAGES = gql`
         query GetPages {
@@ -151,7 +148,6 @@ export default defineNuxtConfig({
             });
           }
         }
-      }
     }
     },
   },
@@ -160,7 +156,6 @@ export default defineNuxtConfig({
     "@nuxtjs/tailwindcss",
     "@nuxt/image",
     "nuxt-swiper",
-    "nuxt-schema-org",
   ],
   schemaOrg: {
     meta: {
@@ -174,13 +169,5 @@ export default defineNuxtConfig({
   },
   imports: {
     dirs: ["composables", "composables/*/**"],
-  },
-
-  devtools: {
-    enabled: false,
-  },
-  devServer: {
-    host: "0.0.0.0",
-    port: 3000,
   },
 });

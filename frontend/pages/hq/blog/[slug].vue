@@ -31,7 +31,6 @@
 <script setup>
 import gql from "graphql-tag";
 import { print } from "graphql";
-import { resolveDirective } from "nuxt/dist/app/compat/capi";
 
 // definePageMeta({
 //   middleware: 
