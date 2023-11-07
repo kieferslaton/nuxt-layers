@@ -1,0 +1,31 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer utilities {
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+}
+
+@font-face {
+  font-family: "Calaya";
+  src: url("/fonts/CalayaRegular.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@import "components/typography";
+@import "components/buttons";
+@import "components/cards";
+@import "components/tables.scss";
+@import "components/accordions.scss";
+@import "components/sliders.scss";
+@import "components/tabs.scss";
+@import "components/forms.scss";
+@import "components/lists.scss";
+@import "components/content.scss";

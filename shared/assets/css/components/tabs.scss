@@ -1,0 +1,16 @@
+.tab-item {
+  color: #333;
+  &-content {
+    div {
+      display: flex;
+      margin-bottom: 3.75rem;
+      h6 {
+        width: 50%;
+      }
+      ul {
+        color: #333;
+        list-style-type: disc;
+      }
+    }
+  }
+}
