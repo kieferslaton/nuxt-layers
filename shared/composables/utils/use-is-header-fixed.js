@@ -5,7 +5,8 @@ export default function (route, isMobile) {
       route.name === "index" ||
       route.name === "faqs" ||
       route.name === "about-services" ||
-      route.name === "find-a-home-name"
+      route.name === "find-a-home-name" ||
+      route.name === "marketing"
     );
   });
   return isHeaderFixed;

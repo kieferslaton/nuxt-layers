@@ -12,7 +12,8 @@ export default function (route, isMobile) {
       route.name === "locations" ||
       route.name === "find-a-home-name" ||
       route.name === "events-slug" ||
-      route.name === "contact"
+      route.name === "contact" ||
+      route.name === "marketing"
     );
   });
   return isDark;
