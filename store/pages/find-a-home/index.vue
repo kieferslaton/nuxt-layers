@@ -1,147 +1,93 @@
 <template>
   <div class="home-archive">
-    <div
-      class="border-b border-t border-primary-light px-row py-6 lg:border-none lg:px-row2x lg:py-0"
-    >
+    <div class="border-b border-t border-primary-light px-row py-6 lg:border-none lg:px-row2x lg:py-0">
       <Breadcrumb title="Find a Home" />
-      <FindAHomeFilters
-        :filters="filters"
-        :appliedFilters="appliedFilters"
-        :activeFilter="activeFilter"
-        :searchTerm="filterState.searchTerm"
-        :condition="filterState.condition"
-        :size="filterState.size"
-        :bedrooms="filterState.bedrooms"
-        @filter-change="activeFilter = $event"
-        @update:searchTerm="filterState.searchTerm = $event"
-        @update:condition="filterState.condition = $event"
-        @update:size="filterState.size = $event"
-        @update:bedrooms="filterState.bedrooms = $event"
-      />
+      <FindAHomeFilters :filters="filters" :appliedFilters="appliedFilters" :activeFilter="activeFilter"
+        :searchTerm="filterState.searchTerm" :condition="filterState.condition" :size="filterState.size"
+        :bedrooms="filterState.bedrooms" @filter-change="activeFilter = $event"
+        @update:searchTerm="filterState.searchTerm = $event" @update:condition="filterState.condition = $event"
+        @update:size="filterState.size = $event" @update:bedrooms="filterState.bedrooms = $event" />
     </div>
-    <div
-      class="homes px-row lg:px-row2x lg:!pt-10"
-      v-if="homes && homes.length > 0"
-      ref="homesList"
-      :style="
-        loading || !firstImageLoaded
-          ? 'visibility: hidden; height: 0; overflow-y: hidden;'
-          : 'padding-top: 5vw;'
-      "
-    >
-      <div
-        class="mb-row flex items-center justify-between lg:mb-10 lg:flex-wrap"
-      >
-        <span class="smallcaps text-gray-light"
-          >{{ totalRecords }} Results</span
-        >
-        <span
-          class="smallcaps relative flex items-center text-white"
-          @click.prevent="showSort = !showSort"
-        >
+    <div class="homes px-row lg:px-row2x lg:!pt-10" v-if="homes && homes.length > 0" ref="homesList" :style="loading
+      ? 'visibility: hidden; height: 0; overflow-y: hidden;'
+      : 'padding-top: 5vw;'
+      ">
+      <div class="mb-row flex items-center justify-between lg:mb-10 lg:flex-wrap">
+        <span class="smallcaps text-gray-light">{{ totalRecords }} Results</span>
+        <span class="smallcaps relative flex items-center text-white" @click.prevent="showSort = !showSort">
           <span class="mr-1">{{ sortText }}</span>
-          <Icon
-            v-if="sortIcon"
-            :name="sortIcon"
-            color="white"
-            size="sm"
-            class="mr-2"
-          />
+          <Icon v-if="sortIcon" :name="sortIcon" color="white" size="sm" class="mr-2" />
           <Icon name="expand_more" color="secondary" size="sm" class="ml-2" />
         </span>
       </div>
-      <div
-        class="flex flex-col lg:flex-row lg:flex-wrap lg:justify-between lg:gap-10"
-      >
-        <a
-          v-for="(home, index) in homes"
-          :key="home.id"
+      <div class="flex flex-col lg:flex-row lg:flex-wrap lg:justify-between lg:gap-10">
+        <a v-for="(home, index) in homes" :key="home.id"
           :href="`/find-a-home/${home.name.toLowerCase().replace(' ', '-')}`"
-          class="block pb-row2x lg:w-[calc(33.333%-1.667rem)] lg:pb-28"
-        >
-          <nuxt-img
-            @load="handleImageLoad(index)"
-            :key="`${index}-${home.defaultImageUrl}`"
-            :src="home.defaultImageUrl"
-            :alt="home.name"
-            class="mb-5 aspect-square w-full rounded-sm object-cover"
-          />
+          class="block pb-row2x lg:w-[calc(33.333%-1.667rem)] lg:pb-28">
+          <NuxtImg @load="handleImageLoad(index)" :key="`${index}-${home.defaultImageUrl}`" :src="home.defaultImageUrl"
+            :alt="home.name" class="mb-5 aspect-square w-full rounded-sm object-cover" placeholder />
           <h2 class="mb-2 font-serif text-4xl">{{ home.name }}</h2>
           <div class="flex justify-between">
-            <h4
-              v-html="
-                home.beds &&
-                `${home.beds} Bed / ` +
-                  (home.baths && `${home.baths} Bath / `) +
-                  (home.width &&
-                    home.length &&
-                    `${home.width * home.length}ft<sup>2</sup>`)
-              "
-            ></h4>
+            <h4 v-html="home.beds &&
+              `${home.beds} Bed / ` +
+              (home.baths && `${home.baths} Bath / `) +
+              (home.width &&
+                home.length &&
+                `${home.width * home.length}ft<sup>2</sup>`)
+              "></h4>
             <h5 class="font-bold">{{ home.category }}</h5>
           </div>
         </a>
       </div>
       <div v-if="loadingMore">Loading...</div>
     </div>
-    <Loader v-if="loading || !firstImageLoaded" />
+    <Loader v-if="loading" />
   </div>
   <Transition @enter="onSortDrawerEnter" @leave="onSortDrawerLeave">
     <div
       class="fixed bottom-0 left-0 z-40 flex w-screen flex-col items-start rounded-sm bg-white px-row py-row text-gray-dark lg:w-[200%]"
-      v-if="showSort"
-    >
+      v-if="showSort">
       <h3 class="mb-8 self-center text-2xl font-bold text-gray-dark">
         Sort By
       </h3>
       <ul class="w-full">
-        <li
-          v-for="item in [
-            { label: 'A-Z', value: 'alpha', abbr: 'A-Z' },
-            {
-              label: 'Square Feet (Low to High)',
-              value: 'sqft_asc',
-              abbr: 'SqFt',
-              icon: 'arrow_upward',
-            },
-            {
-              label: 'Square Feet (High to Low)',
-              value: 'sqft_desc',
-              abbr: 'SqFt',
-              icon: 'arrow_downward',
-            },
-            {
-              label: '# Bedrooms (Low to High)',
-              value: 'beds_asc',
-              abbr: 'Beds',
-              icon: 'arrow_upward',
-            },
-            {
-              label: '# Bedrooms (High to Low)',
-              value: 'beds_desc',
-              abbr: 'Beds',
-              icon: 'arrow_downward',
-            },
-          ]"
-          @click.prevent="handleSort(item)"
-          class="flex w-full justify-between py-4 text-center text-gray-dark"
-        >
+        <li v-for="item in [
+          { label: 'A-Z', value: 'alpha', abbr: 'A-Z' },
+          {
+            label: 'Square Feet (Low to High)',
+            value: 'sqft_asc',
+            abbr: 'SqFt',
+            icon: 'arrow_upward',
+          },
+          {
+            label: 'Square Feet (High to Low)',
+            value: 'sqft_desc',
+            abbr: 'SqFt',
+            icon: 'arrow_downward',
+          },
+          {
+            label: '# Bedrooms (Low to High)',
+            value: 'beds_asc',
+            abbr: 'Beds',
+            icon: 'arrow_upward',
+          },
+          {
+            label: '# Bedrooms (High to Low)',
+            value: 'beds_desc',
+            abbr: 'Beds',
+            icon: 'arrow_downward',
+          },
+        ]" @click.prevent="handleSort(item)" class="flex w-full justify-between py-4 text-center text-gray-dark">
           <label :for="item.value">{{ item.label }}</label>
           <input type="radio" :name="item.value" :id="item.value" hidden />
-          <div
-            class="flex h-[16px] w-[16px] items-center justify-center rounded-full"
-            :class="
-              sort === item.value
-                ? 'border-4 border-secondary'
-                : 'border border-gray'
-            "
-          ></div>
+          <div class="flex h-[16px] w-[16px] items-center justify-center rounded-full" :class="sort === item.value
+            ? 'border-4 border-secondary'
+            : 'border border-gray'
+            "></div>
         </li>
       </ul>
-      <button
-        @click.prevent="showSort = false"
-        class="absolute right-4 top-4 flex items-center justify-center rounded-full bg-gray-lighter p-2"
-      >
+      <button @click.prevent="showSort = false"
+        class="absolute right-4 top-4 flex items-center justify-center rounded-full bg-gray-lighter p-2">
         <Icon name="close" size="md" color="gray-dark" />
       </button>
     </div>
@@ -225,7 +171,6 @@ let fetchHomes = async () => {
       },
     });
     if (data) {
-      console.log(data);
       loading.value = false;
       loadingMore.value = false;
       return data;
@@ -238,8 +183,10 @@ let fetchHomes = async () => {
 watch(
   filterState,
   async () => {
+    console.log(filterState);
     page.value = 1;
     const data = await fetchHomes();
+    console.log(data);
     if (data) {
       homes.value = data.items;
       totalRecords.value = data.totalRecords;

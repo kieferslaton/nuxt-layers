@@ -17,7 +17,7 @@
     <Nav class="hidden lg:flex" :currentItem="currentItem" />
     <button @click.prevent="() => (showNav = true)"
       class="flex h-14 w-14 items-center justify-center rounded-[3px] border border-[#C8D2D6] lg:hidden">
-      <Icon name="menu" :color="isDark && !isHeaderFixed ? 'white' : 'primary'" size="lg" />
+      <Icon name="menu" :color="isDark ? 'white' : 'primary'" size="lg" />
     </button>
   </header>
   <Transition @enter="onMobileNavEnter" @leave="onMobileNavLeave">
@@ -37,7 +37,6 @@ const props = defineProps({
 });
 
 const { data: menuItems } = await getMenu('Main Navigation', props.siteType);
-//console.log(menuItems);
 
 const headerStyle = computed(() => {
   return props.isHeaderFixed
@@ -68,19 +67,19 @@ const currentLogo = computed(() => {
   switch (theme) {
     case "Regional":
       logoPath =
-        props.isDark && !props.isHeaderFixed
+        props.isDark
           ? "/logos/regional-logo-white.svg"
           : "/logos/regional-logo.svg";
       break;
     case "Town and Country":
       logoPath =
-        props.isDark && !props.isHeaderFixed
+        props.isDark
           ? "/logos/tc-logo-white.svg"
           : "/logos/tc-logo.svg";
       break;
     case "brandC":
       logoPath =
-        props.isDark && !props.isHeaderFixed
+        props.isDark
           ? "/logos/logo-brandC-white.svg"
           : "/logos/logo-brandC.svg";
       break;

@@ -17,5 +17,8 @@
   </section>
 </template>
 <script setup>
+definePageMeta({
+  layout: 'fixed-header',
+})
 const services = await getServices();
 </script>

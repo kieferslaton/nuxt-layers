@@ -1,19 +1,23 @@
 <template>
   <section v-if="pageData"
-    class="flex h-screen w-full flex-col items-center justify-between from-transparent from-90% to-primary bg-[length:400vw] px-row pb-4 pt-36 lg:justify-start lg:bg-cover lg:pt-60"
+    class="h-screen text-primary-dark w-full bg-[length:400vw] px-row pb-4 pt-36 lg:justify-start lg:bg-cover lg:pt-60"
     style="background-position: 35% 0" :style="{
       backgroundImage: `url('${pageData.featuredImage.node.sourceUrl}')`,
     }">
-    <div class="relative z-20">
-      <h1 class="text-center lg:w-[28rem]">
-        {{ pageData.homepage.heroHeadline.normal }}<br />
-        <span class="font-script text-7xl text-secondary lg:text-9xl">{{
-          pageData.homepage.heroHeadline.script
-        }}</span>
-      </h1>
-      <p>{{ pageData.homepage.heroHeadline.subheader }}</p>
+    <div class="absolute left-0 top-0 w-full h-2/3 bg-gradient-to-b from-white from-10% to-transparent"></div>
+    <div class="absolute left-0 bottom-0 w-full h-40 bg-gradient-to-b from-transparent to-primary z-10"></div>
+    <div class="relative z-20 h-full w-full flex flex-col items-center justify-between">
+      <div>
+        <h1 class="text-center lg:w-[28rem]">
+          {{ pageData.homepage.heroHeadline.normal }}<br />
+          <span class="font-script text-7xl text-secondary lg:text-9xl">{{
+            pageData.homepage.heroHeadline.script
+          }}</span>
+        </h1>
+        <p>{{ pageData.homepage.heroHeadline.subheader }}</p>
+      </div>
+      <LocationsAutocomplete @update:location="handleLocationUpdate" />
     </div>
-    <LocationsAutocomplete @update:location="handleLocationUpdate" />
   </section>
   <section class="bg-primary px-row pb-20 pt-16 text-white lg:px-row2x">
     <h4 class="smallcaps mb-4 text-gray-light">Our Mission</h4>
@@ -57,8 +61,11 @@ const { data: pageData } = await getHome();
 
 const locations = ref([]);
 
+definePageMeta({
+  layout: 'fixed-header'
+})
+
 await $fetch('/api/locations').then(res => {
-  console.log(res)
   locations.value = res;
 })
 

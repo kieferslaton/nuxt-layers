@@ -2,8 +2,9 @@
   <div class="home-single" v-if="home">
     <section @click="() => (showImagesModal = true)" class="relative z-0 h-[70vh] w-full bg-cover bg-center tl:h-[75vh]"
       :style="{
-        backgroundImage: `linear-gradient(to bottom, transparent, rgba(0,0,0,0.3)), url('${home.defaultImageUrl}')`,
+        backgroundImage: `url('${home.defaultImageUrl}')`,
       }">
+      <div class="absolute left-0 top-0 w-full h-2/3 bg-gradient-to-b from-white to-transparent"></div>
       <button
         class="absolute bottom-4 left-1/2 flex -translate-x-1/2 items-center justify-center rounded bg-gray-dark px-4 py-2 text-xs tracking-widest"
         v-if="home.images && home.images.length > 1">
@@ -76,7 +77,7 @@
         }">
           <SwiperSlide v-for="image in home.images" :key="image" class="flex h-full flex-col justify-center"
             style="display: flex !important">
-            <img :src="image.url" class="mb-row" />
+            <NuxtImg :src="image.url" class="mb-row" />
             <p class="ml-row text-white">{{ image.description }}</p>
           </SwiperSlide>
           <div
@@ -106,6 +107,10 @@
 <script setup>
 import { Swiper, SwiperSlide } from "swiper/vue";
 import "swiper/swiper-bundle.css";
+
+definePageMeta({
+  layout: 'fixed-header'
+})
 
 const route = useRoute();
 const isMobile = useIsMobile();

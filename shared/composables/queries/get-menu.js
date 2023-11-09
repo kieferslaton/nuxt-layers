@@ -38,12 +38,14 @@ export default async function (menuName = "Main Navigation", source = "store") {
       ? config.public.wordpressStoreApiUrl
       : config.public.wordpressParentApiUrl,
     {
-      key: "menu",
+      key: menuName,
       method: "post",
       body: {
         query: print(GET_MENU),
       },
       transform(data) {
+        console.log(menuName);
+
         //Return only the menu whose name matches the menuName parameter
         return data.data.menus.edges.filter(
           (menu) => menu.node.name === menuName
