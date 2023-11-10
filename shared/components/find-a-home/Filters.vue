@@ -41,7 +41,7 @@
       </div>
       <Transition @enter="onFilterDrawerEnter" @leave="onFilterDrawerLeave">
         <div
-          class="fixed bottom-0 left-0 z-40 flex w-screen flex-col items-center rounded-sm bg-white px-row py-row text-gray-dark lg:w-[200%]"
+          class="fixed bottom-0 left-0 z-40 flex w-full flex-col items-center rounded-sm bg-white px-row py-row text-gray-dark lg:px-row2x"
           v-if="activeFilter"
         >
           <h3 class="text-2xl font-bold">Filters</h3>

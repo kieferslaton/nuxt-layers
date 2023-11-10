@@ -1,50 +1,80 @@
 <template>
-  <div class="border-t border-primary-lighter pb-4 pl-row pt-6">
+  <div class="border-primary-lighter pl-row border-t pb-4 pt-6">
     <Breadcrumb />
   </div>
   <!--Featured Post-->
-  <div class="post flex flex-col border-b border-primary-lighter px-row pb-20 tl:flex-row tl:gap-8 lg:px-row2x">
-    <img :src="featuredPost.featuredImage?.node?.sourceUrl" :alt="featuredPost.featuredImage?.node?.altText"
-      class="mb-6 w-full rounded-sm tl:w-1/2" />
-    <div class="flex w-full max-w-sm flex-col justify-center tl:-mt-12 tl:w-1/2">
-      <div class="mb-6 flex text-[0.85rem]">
-        <a href="/" class="text-white underline">{{
-          featuredPost.categories?.edges[0].node?.name
-        }}</a>
-        <span class="mx-2 text-white">|</span>
-        <span>{{
-          featuredPost.date
-          ? Intl.DateTimeFormat("en-US", {
-            month: "short",
-            day: "numeric",
-            year: "numeric",
-          }).format(new Date(featuredPost.date))
-          : ""
-        }}</span>
+  <div
+    class="post border-primary-lighter px-row tl:flex-row tl:gap-8 lg:px-row2x flex flex-col border-b pb-20"
+  >
+    <!-- Homebuyer's Guide -->
+    <div class="mb-6 w-full rounded-sm lg:w-1/2">
+      <div
+        class="pt-row tl:pb-[20vw] flex items-start justify-center rounded-sm bg-white bg-cover bg-bottom bg-no-repeat pb-[30vw] shadow-lg lg:pb-[12.5vw] lg:pt-8"
+        :style="{
+          backgroundImage: `url('${pageData.homebuyersGuideCopy.background.sourceUrl}')`,
+        }"
+      >
+        <h2 class="text-gray-dark mb-5 text-center uppercase tracking-wider">
+          <span class="font-script text-accent text-4xl normal-case">The</span
+          ><br />
+          Home<br />
+          Buyer's<br />
+          Guide
+        </h2>
       </div>
-      <h2 class="mb-8 text-4xl">{{ featuredPost.title }}</h2>
-      <a class="btn btn-transparent self-start" :href="`/blog/${featuredPost.slug}`">Continue Reading</a>
+    </div>
+    <div
+      class="tl:-mt-12 tl:w-1/2 flex w-full max-w-sm flex-col justify-center"
+    >
+      <p class="mb-7 max-w-xs text-white">
+        {{ pageData.homebuyersGuideCopy.subheader }}
+      </p>
+      <NuxtLink href="/homebuyers-guide" class="btn btn-secondary"
+        >Start Learning Now</NuxtLink
+      >
     </div>
   </div>
   <!--End Featured Post-->
-  <div class="px-row pb-20 pt-10 lg:px-row2x">
-    <div class="no-scrollbar -mr-row mb-8 flex overflow-x-scroll lg:overflow-x-auto">
-      <button class="mr-3 flex items-center rounded-md border border-primary-light px-5 py-2"
-        :class="selectedCategory === '' ? 'border-none bg-secondary' : ''" @click="selectedCategory = ''">
+  <div class="px-row lg:px-row2x pb-20 pt-10">
+    <div
+      class="no-scrollbar -mr-row mb-8 flex overflow-x-scroll lg:overflow-x-auto"
+    >
+      <button
+        class="border-primary-light mr-3 flex items-center rounded-md border px-5 py-2"
+        :class="selectedCategory === '' ? 'bg-secondary border-none' : ''"
+        @click="selectedCategory = ''"
+      >
         All
       </button>
-      <button class="mr-3 rounded-md border border-primary-light px-5 py-2" :class="category.name === selectedCategory ? 'border-none bg-secondary' : ''
-        " v-for="category in categories" :index="category.name" @click="selectedCategory = category.name">
+      <button
+        class="border-primary-light mr-3 rounded-md border px-5 py-2"
+        :class="
+          category.name === selectedCategory ? 'bg-secondary border-none' : ''
+        "
+        v-for="category in categories"
+        :index="category.name"
+        @click="selectedCategory = category.name"
+      >
         {{ category.name }}
       </button>
     </div>
     <!-- Posts Grid -->
-    <div class="posts__grid grid grid-cols-1 gap-8 tp:grid-cols-2 d:grid-cols-3">
-      <div v-for="post in posts" :index="post.slug" class="posts__grid-item overflow-hidden rounded bg-primary-light">
-        <img v-if="post.featuredImage" :src="post.featuredImage.node.sourceUrl" :alt="post.featuredImage.node.altText"
-          class="aspect-auto w-full" />
-        <div class="px-row py-6 tp:px-8">
-          <h3 class="mb-4 text-lg d:text-xl">{{ post.title }}</h3>
+    <div
+      class="posts__grid tp:grid-cols-2 d:grid-cols-3 grid grid-cols-1 gap-8"
+    >
+      <div
+        v-for="post in posts"
+        :index="post.slug"
+        class="posts__grid-item bg-primary-light overflow-hidden rounded"
+      >
+        <img
+          v-if="post.featuredImage"
+          :src="post.featuredImage.node.sourceUrl"
+          :alt="post.featuredImage.node.altText"
+          class="aspect-auto w-full"
+        />
+        <div class="px-row tp:px-8 py-6">
+          <h3 class="d:text-xl mb-4 text-lg">{{ post.title }}</h3>
           <div class="mb-4 flex text-[0.85rem]">
             <a href="/" class="text-white underline">{{
               post.categories.edges[0].node.name
@@ -63,8 +93,11 @@
       </div>
     </div>
     <!-- End Posts Grid -->
-    <button v-if="nextPage" @click="loadMore"
-      class="mb-2 mr-2 mt-12 rounded-md bg-secondary px-5 py-2.5 text-sm font-medium text-white">
+    <button
+      v-if="nextPage"
+      @click="loadMore"
+      class="bg-secondary mb-2 mr-2 mt-12 rounded-md px-5 py-2.5 text-sm font-medium text-white"
+    >
       Load More
     </button>
   </div>
@@ -186,6 +219,9 @@ watch(selectedCategory, () => {
 const loadMore = () => {
   cursor.value = postData.value.pageInfo.endCursor;
 };
+
+// Get homebuyers guide
+const { data: pageData } = await getMarketingPage();
 </script>
 
 <style>

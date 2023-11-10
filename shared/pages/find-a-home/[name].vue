@@ -1,27 +1,36 @@
 <template>
   <div class="home-single" v-if="home">
-    <section @click="() => (showImagesModal = true)" class="relative z-0 h-[70vh] w-full bg-cover bg-center tl:h-[75vh]"
+    <section
+      @click="() => (showImagesModal = true)"
+      class="relative z-0 h-[70vh] w-full bg-cover bg-center tl:h-[75vh]"
       :style="{
         backgroundImage: `url('${home.defaultImageUrl}')`,
-      }">
-      <div class="absolute left-0 top-0 w-full h-2/3 bg-gradient-to-b from-white to-transparent"></div>
+      }"
+    >
+      <div
+        class="absolute left-0 top-0 h-2/3 w-full bg-gradient-to-b from-white to-transparent"
+      ></div>
       <button
-        class="absolute bottom-4 left-1/2 flex -translate-x-1/2 items-center justify-center rounded bg-gray-dark px-4 py-2 text-xs tracking-widest"
-        v-if="home.images && home.images.length > 1">
+        class="absolute bottom-4 left-1/2 flex -translate-x-1/2 items-center justify-center rounded bg-gray-dark px-4 py-2 text-xs tracking-widest text-white"
+        v-if="home.images && home.images.length > 1"
+      >
         <Icon name="image" size="12" color="white" class="mr-2" filled />
         1 / {{ home.images.length }}
       </button>
     </section>
     <section
-      class="border-b border-primary bg-primary px-row pb-10 pt-12 text-white lg:flex lg:items-end lg:justify-between lg:bg-transparent lg:px-row2x">
+      class="border-b border-primary bg-primary px-row pb-10 pt-12 text-white lg:flex lg:items-end lg:justify-between lg:bg-transparent lg:px-row2x"
+    >
       <div>
         <h2 class="mb-4 lg:text-7xl">{{ home.name }}</h2>
         <p class="smallcaps mb-5 text-gray-light">
           Built By <a class="underline" href="#">Hamilton</a>
         </p>
         <div class="mb-10 flex w-full justify-between lg:mb-0">
-          <span>{{ home.beds }} Bed / {{ home.baths }}Bath /
-            {{ home.length * home.width }}ft<sup>2</sup></span>
+          <span
+            >{{ home.beds }} Bed / {{ home.baths }}Bath /
+            {{ home.length * home.width }}ft<sup>2</sup></span
+          >
           <span class="font-bold">{{ home.category }}</span>
         </div>
       </div>
@@ -36,10 +45,15 @@
         </a>
       </div>
     </section>
-    <section class="flex flex-col items-center bg-primary px-row pb-20 pt-10 lg:px-row2x">
+    <section
+      class="flex flex-col items-center bg-primary px-row pb-20 pt-10 lg:px-row2x"
+    >
       <div class="mb-20 rounded bg-white px-row py-row">
         <div class="flex flex-col lg:flex-row-reverse lg:gap-20">
-          <img src="/images/home-single-illo.png" class="mb-5 w-full shrink-0 lg:basis-[40%]" />
+          <img
+            src="/images/home-single-illo.png"
+            class="mb-5 w-full shrink-0 lg:basis-[40%]"
+          />
           <div>
             <h6 class="mb-4">Description</h6>
             <p class="mb-7 text-gray-dark">
@@ -49,11 +63,17 @@
               available to make this home truly one-of-a-kind.
             </p>
             <div class="lg:flex lg:items-center lg:gap-8">
-              <a class="btn btn-secondary-transparent btn-full mb-5 flex items-center lg:mb-0 lg:px-4" href="#">
+              <a
+                class="btn btn-secondary-transparent btn-full mb-5 flex items-center lg:mb-0 lg:px-4"
+                href="#"
+              >
                 <Icon name="360" size="18" color="secondary" class="mr-3" />
                 Take 3D Tour
               </a>
-              <a class="btn btn-secondary-transparent btn-full mb-16 flex items-center lg:mb-0 lg:px-4" href="#">
+              <a
+                class="btn btn-secondary-transparent btn-full mb-16 flex items-center lg:mb-0 lg:px-4"
+                href="#"
+              >
                 <Icon name="grid_on" size="18" color="secondary" class="mr-3" />
                 View Floor Plan
               </a>
@@ -61,43 +81,77 @@
           </div>
         </div>
         <h6 class="lg:mt-row2x">Floor Plan Specifications</h6>
-        <Accordion :items="items" v-if="isMobile" itemClasses="py-5" headerClasses="text-gray-dark" />
+        <Accordion
+          :items="items"
+          v-if="isMobile"
+          itemClasses="py-5"
+          headerClasses="text-gray-dark"
+        />
         <Tabs :items="items" v-else />
       </div>
-      <a class="btn btn-transparent btn-auto flex items-center border-primary-lighter" href="/find-a-home">
-        <Icon name="keyboard_arrow_left" color="secondary" size="16" class="mr-3" />
+      <a
+        class="btn btn-transparent btn-auto flex items-center border-primary-lighter"
+        href="/find-a-home"
+      >
+        <Icon
+          name="keyboard_arrow_left"
+          color="secondary"
+          size="16"
+          class="mr-3"
+        />
         Back to Home Search
       </a>
     </section>
-    <div class="fixed left-0 top-0 z-50 h-screen w-screen bg-black" v-if="showImagesModal">
+    <div
+      class="fixed left-0 top-0 z-50 h-screen w-screen bg-black"
+      v-if="showImagesModal"
+    >
       <ClientOnly>
-        <Swiper class="relative h-full" @slideChange="onSlideChange" :modules="[SwiperNavigation]" :navigation="{
-          nextEl: '.swiper-btn-next',
-          prevEl: '.swiper-btn-prev',
-        }">
-          <SwiperSlide v-for="image in home.images" :key="image" class="flex h-full flex-col justify-center"
-            style="display: flex !important">
+        <Swiper
+          class="relative h-full"
+          @slideChange="onSlideChange"
+          :modules="[SwiperNavigation]"
+          :navigation="{
+            nextEl: '.swiper-btn-next',
+            prevEl: '.swiper-btn-prev',
+          }"
+        >
+          <SwiperSlide
+            v-for="image in home.images"
+            :key="image"
+            class="flex h-full flex-col justify-center"
+            style="display: flex !important"
+          >
             <NuxtImg :src="image.url" class="mb-row" />
             <p class="ml-row text-white">{{ image.description }}</p>
           </SwiperSlide>
           <div
-            class="swiper-btn-next absolute right-4 top-1/2 z-10 hidden h-14 w-14 items-center justify-center rounded-full bg-gray-dark tp:flex">
+            class="swiper-btn-next absolute right-4 top-1/2 z-10 hidden h-14 w-14 items-center justify-center rounded-full bg-gray-dark tp:flex"
+          >
             <Icon name="arrow_forward_ios" size="20" color="white" />
           </div>
           <div
-            class="swiper-btn-prev absolute left-4 top-1/2 z-10 hidden h-14 w-14 items-center justify-center rounded-full bg-gray-dark tp:flex">
-            <Icon name="arrow_back_ios" size="20" color="white" class="ml-[0.4rem]" />
+            class="swiper-btn-prev absolute left-4 top-1/2 z-10 hidden h-14 w-14 items-center justify-center rounded-full bg-gray-dark tp:flex"
+          >
+            <Icon
+              name="arrow_back_ios"
+              size="20"
+              color="white"
+              class="ml-[0.4rem]"
+            />
           </div>
         </Swiper>
       </ClientOnly>
       <div
-        class="absolute bottom-4 left-1/2 z-30 flex -translate-x-1/2 items-center justify-center rounded px-4 py-2 text-xs tracking-widest lg:bg-gray-dark">
+        class="absolute bottom-4 left-1/2 z-30 flex -translate-x-1/2 items-center justify-center rounded px-4 py-2 text-xs tracking-widest text-white lg:bg-gray-dark"
+      >
         <Icon name="image" size="12" color="white" class="mr-2" filled />
         {{ currentImageSlide }} / {{ home.images.length }}
       </div>
       <button
         class="absolute right-6 top-6 z-30 flex h-10 w-10 items-center justify-center rounded-full bg-secondary/70 transition-colors hover:bg-secondary/100"
-        @click="() => (showImagesModal = false)">
+        @click="() => (showImagesModal = false)"
+      >
         <Icon name="close" size="20" color="white" />
       </button>
     </div>
@@ -109,8 +163,8 @@ import { Swiper, SwiperSlide } from "swiper/vue";
 import "swiper/swiper-bundle.css";
 
 definePageMeta({
-  layout: 'fixed-header'
-})
+  layout: "fixed-header",
+});
 
 const route = useRoute();
 const isMobile = useIsMobile();
