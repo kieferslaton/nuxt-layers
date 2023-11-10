@@ -20,7 +20,7 @@
           Built By <a class="underline" href="#">Hamilton</a>
         </p>
         <div class="mb-10 flex w-full justify-between lg:mb-0">
-          <span>{{ home.beds }} Bed / {{ home.baths }}Bath /
+          <span>{{ home.beds }} Bed / {{ home.baths }} Bath /
             {{ home.length * home.width }}ft<sup>2</sup></span>
           <span class="font-bold">{{ home.category }}</span>
         </div>
@@ -49,11 +49,13 @@
               available to make this home truly one-of-a-kind.
             </p>
             <div class="lg:flex lg:items-center lg:gap-8">
-              <a class="btn btn-secondary-transparent btn-full mb-5 flex items-center lg:mb-0 lg:px-4" href="#">
+              <a v-if="home.virtualTourUrl" target="_blank" :href="home.virtualTourUrl"
+                class="btn btn-secondary-transparent btn-full mb-5 flex items-center lg:mb-0 lg:px-4">
                 <Icon name="360" size="18" color="secondary" class="mr-3" />
                 Take 3D Tour
               </a>
-              <a class="btn btn-secondary-transparent btn-full mb-16 flex items-center lg:mb-0 lg:px-4" href="#">
+              <a v-if="home.floorPlanUrl" target="_blank" :href="home.floorPlanUrl"
+                class="btn btn-secondary-transparent btn-full mb-16 flex items-center lg:mb-0 lg:px-4">
                 <Icon name="grid_on" size="18" color="secondary" class="mr-3" />
                 View Floor Plan
               </a>
@@ -68,6 +70,31 @@
         <Icon name="keyboard_arrow_left" color="secondary" size="16" class="mr-3" />
         Back to Home Search
       </a>
+      <div v-if="homeLocations" class="px-row">
+        <h2 class="mb-4 lg:w-[55vw]">
+          Find this Home
+        </h2>
+        <h5 class="mb-8">The {{ home.name }} is current in stock at the following locations:</h5>
+        <Map :locations="homeLocations" class="mb-8" />
+        <div class="mb-8">
+          <div class="mb-4 flex w-full justify-between" v-for="location in homeLocations" :key="location.name">
+            <a :href="location.locationUrl" target="_blank" class="flex max-w-[70%] items-center"><span
+                class="flex-grow overflow-hidden text-ellipsis whitespace-nowrap">{{ location.name }}</span>
+              <Icon color="secondary" name="open_in_browser" class="ml-2" size="16" />
+            </a>
+            <div class="flex gap-2">
+              <a :href="createDirectionsLink(location)"
+                class="flex h-8 w-8 items-center justify-center rounded-full border border-secondary">
+                <Icon name="location_on" size="14" filled />
+              </a>
+              <a :href="`tel:${location.phone}`"
+                class="flex h-8 w-8 items-center justify-center rounded-full border border-secondary">
+                <Icon name="phone" size="14" filled />
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
     </section>
     <div class="fixed left-0 top-0 z-50 h-screen w-screen bg-black" v-if="showImagesModal">
       <ClientOnly>
@@ -112,11 +139,14 @@ definePageMeta({
   layout: 'fixed-header'
 })
 
+const homeLocations = ref(null);
+
 const route = useRoute();
 const isMobile = useIsMobile();
 const { data: home } = await useFetch(`/api/home?name=${route.params.name}`);
-
-console.log(home.value);
+if (useAttrs().siteType === 'HQ') {
+  //homeLocations.value = await $fetch(`/api/home-locations?name=${route.params.name}`);
+}
 
 useSeoMeta({});
 
@@ -182,6 +212,11 @@ const onSlideChange = (swiper) => {
   console.log(swiper.activeIndex);
   currentImageSlide.value = swiper.activeIndex + 1;
 };
+
+function createDirectionsLink(destination) {
+  const destinationCoords = `${destination.latitude},${destination.longitude}`;
+  return `https://www.google.com/maps/dir/?api=1&destination=${destinationCoords}`;
+}
 
 const items = [
   {

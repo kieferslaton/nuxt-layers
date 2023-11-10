@@ -50,10 +50,14 @@
           `Delivers to ${location.deliversTo.join(", ")}`
         }}</span>
       </div>
-      <a class="btn btn-secondary-transparent btn-full mb-4 flex items-center justify-center text-white">
+      <NuxtLink :to="{
+            name: 'prequalify', query: {
+              salespersonId: agent.salespersonId,
+            }
+          }" class="btn btn-secondary-transparent btn-full mb-4 flex items-center justify-center text-white">
         <Icon name="check" color="white" size="22" class="mr-3" />Get
         Prequalified
-      </a>
+      </NuxtLink>
       <a class="btn btn-gray-light-transparent btn-full mb-12 flex items-center justify-center text-white">
         <Icon name="search" color="white" size="22" class="mr-3" />Search for
         Homes

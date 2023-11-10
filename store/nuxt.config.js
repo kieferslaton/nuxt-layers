@@ -9,4 +9,7 @@ export default defineNuxtConfig({
       siteType: process.env.SITE_TYPE || "STORE",
     },
   },
+  imports: {
+    dirs: ["composables", "composables/*/**"],
+  },
 });

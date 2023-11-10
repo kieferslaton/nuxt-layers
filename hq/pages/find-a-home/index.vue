@@ -39,7 +39,7 @@
           </div>
         </a>
       </div>
-      <div v-if="loadingMore">Loading...</div>
+      <div class="pb-8 w-full text-center" v-if="loadingMore">Loading...</div>
     </div>
     <Loader v-if="loading" />
   </div>
@@ -171,9 +171,9 @@ let fetchHomes = async () => {
       },
     });
     if (data) {
+      console.log(data);
       loading.value = false;
       loadingMore.value = false;
-      console.log(data)
       return data;
     }
   } catch (error) {
@@ -214,6 +214,7 @@ watch(page, async () => {
 });
 
 const handleScroll = () => {
+
   const sectionRect = homesList.value.getBoundingClientRect();
   const bottomOfSection =
     sectionRect.top + sectionRect.height <= window.innerHeight;
@@ -221,7 +222,7 @@ const handleScroll = () => {
   if (
     totalRecords.value > homes.value.length &&
     bottomOfSection &&
-    !loading.value
+    !loadingMore.value
   ) {
     loadingMore.value = true;
     page.value++;

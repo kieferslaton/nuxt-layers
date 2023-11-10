@@ -1,10 +1,7 @@
 <template>
   <div class="border-t border-primary-light px-row pb-20 pt-6 d:px-row2x">
     <Breadcrumb />
-    <div
-      v-if="submitted"
-      class="mb-row flex w-full flex-col items-center rounded bg-white px-row py-12 text-gray-dark"
-    >
+    <div v-if="submitted" class="mb-row flex w-full flex-col items-center rounded bg-white px-row py-12 text-gray-dark">
       <h2 class="mb-8 text-4xl text-gray-dark">Thank You</h2>
       <p class="mb-12 text-center">
         Thanks for your submission! One of our sales representatives will be in
@@ -12,22 +9,14 @@
       </p>
     </div>
     <div v-else class="text-gray-dark">
-      <PrequalifyPreferences
-        :formData="formData"
-        :v$="v$"
-        :preselect="preselect"
-        v-if="preselect"
-      />
+      <PrequalifyPreferences :formData="formData" :v$="v$" :preselect="preselect" v-if="preselect" />
       <PrequalifyPersonal :formData="formData" :v$="v$" />
       <PrequalifyFinancial :formData="formData" :v$="v$" />
       <PrequalifyPreferences :formData="formData" :v$="v$" v-if="!preselect" />
-      <PrequalifyMarketing :formData="formData" :v$="v$" />
+      <PrequalifyMarketing :formData="formData" :v$="v$" :agents="agents" />
       <div class="ml-auto w-full d:w-2/3">
         <div class="w-full">
-          <button
-            class="btn btn-secondary btn-full mb-8 w-full"
-            @click.prevent="submit"
-          >
+          <button class="btn btn-secondary btn-full mb-8 w-full" @click.prevent="submit">
             Submit Request
           </button>
         </div>
@@ -69,6 +58,7 @@ if (route.query?.home) {
   const { data } = await useFetch(`/api/home?name=${route.query.home}`);
   preselect.value = data.value;
 }
+const agents = await $fetch('/api/agents');
 const formData = reactive({
   firstName: "",
   lastName: "",
@@ -88,7 +78,8 @@ const formData = reactive({
   type: preselect.value ? [preselect.value.category.toLowerCase()] : [],
   land: "no",
   purchaseDate: "less-than-1-month",
-  salesPerson: "no",
+  salesPerson: route.query.salespersonId ? "yes" : "no",
+  salesPersonId: route.query.salespersonId || "",
   referral: "",
   newsletter: false,
 });
@@ -151,11 +142,11 @@ const v$ = useVuelidate(rules, formData);
 const submitted = ref(false);
 
 const submit = async () => {
-  const result = await v$.value.$validate();
-  console.log(result);
-  if (!result) {
-    return;
-  }
+  // const result = await v$.value.$validate();
+  // console.log(result);
+  // if (!result) {
+  //   return;
+  // }
   submitted.value = true;
   console.log(formData);
 };

@@ -36,9 +36,6 @@
 </template>
 
 <script setup>
-import { GoogleMap, Marker, InfoWindow } from "vue3-google-map";
-
-
 const lat = ref(null);
 const lng = ref(null);
 

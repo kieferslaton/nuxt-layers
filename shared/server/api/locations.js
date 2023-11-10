@@ -1,72 +1,77 @@
 export default defineEventHandler(async (event) => {
-    const config = useRuntimeConfig();
-    const query = getQuery(event);
+  const config = useRuntimeConfig();
+  const query = getQuery(event);
 
-    let hasSearch = false;
-    let lat, lng;
+  let hasSearch = false;
+  let lat, lng;
 
-    if(query && query.lat && query.lng) {
-        lat = query.lat;
-        lng = query.lng;
-        hasSearch = true;
-    };
+  if (query && query.lat && query.lng) {
+    lat = query.lat;
+    lng = query.lng;
+    hasSearch = true;
+  }
 
-    const response = await fetch('https://media.regionalhomes.net/regent-public/company-master.json');
+  const response = await fetch(
+    "https://media.regionalhomes.net/regent-public/company-master.json"
+  );
+  const data = await response.json();
+
+  function getDistanceFromLatLonInKm(lat1, lon1, lat2, lon2) {
+    const R = 6371; // Radius of the earth in km
+    const dLat = deg2rad(lat2 - lat1);
+    const dLon = deg2rad(lon2 - lon1);
+    const a =
+      Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+      Math.cos(deg2rad(lat1)) *
+        Math.cos(deg2rad(lat2)) *
+        Math.sin(dLon / 2) *
+        Math.sin(dLon / 2);
+    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+    const distance = R * c; // Distance in km
+    return distance;
+  }
+
+  function deg2rad(deg) {
+    return deg * (Math.PI / 180);
+  }
+
+  async function fetchStoreData(store) {
+    const response = await fetch(store.dataUrl);
     const data = await response.json();
 
-    function getDistanceFromLatLonInKm(lat1, lon1, lat2, lon2) {
-        const R = 6371; // Radius of the earth in km
-        const dLat = deg2rad(lat2 - lat1);
-        const dLon = deg2rad(lon2 - lon1);
-        const a =
-          Math.sin(dLat / 2) * Math.sin(dLat / 2) +
-          Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) *
-          Math.sin(dLon / 2) * Math.sin(dLon / 2);
-        const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-        const distance = R * c; // Distance in km
-        return distance;
-      }
-    
-      function deg2rad(deg) {
-        return deg * (Math.PI / 180);
-      }
+    const apiKey = "AIzaSyCrI98GTvPp-yGlhnVKX2sgGeexccPOKAk";
+    const url = `https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(
+      data.store.streetAddress1 + "," + data.store.city + " " + data.store.state
+    )}&key=${apiKey}`;
 
-    async function fetchStoreData(store){
-        const response = await fetch(store.dataUrl);
-        const data = await response.json();
+    const googleMapsResponse = await fetch(url);
+    const googleMapsData = await googleMapsResponse.json();
 
-        const apiKey = 'AIzaSyCrI98GTvPp-yGlhnVKX2sgGeexccPOKAk';
-        const url = `https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(data.store.streetAddress1 + ',' + data.store.city + ' ' + data.store.state)}&key=${apiKey}`;
+    const location = googleMapsData.results[0].geometry.location;
 
-        const googleMapsResponse = await fetch(url);
-        const googleMapsData = await googleMapsResponse.json();
+    let distance = hasSearch
+      ? getDistanceFromLatLonInKm(lat, lng, location.lat, location.lng)
+      : null;
 
-        const location = googleMapsData.results[0].geometry.location;
+    return {
+      city: data.store.city,
+      state: data.store.state,
+      phone: data.store.officePhone,
+      name: data.store.storeName,
+      zip: data.store.zip,
+      latitude: parseFloat(location.lat),
+      longitude: parseFloat(location.lng),
+      distance: distance,
+    };
+  }
 
-        let distance = hasSearch ? getDistanceFromLatLonInKm(lat, lng, location.lat, location.lng) : null;
+  let locations = await Promise.all(
+    data.companies[0].stores.map(fetchStoreData)
+  );
 
-        return {
-            city: data.store.city,
-            state: data.store.state,
-            phone: data.store.officePhone,
-            name: data.store.storeName,
-            zip: data.store.zip,
-            latitude: parseFloat(location.lat),
-            longitude: parseFloat(location.lng), 
-            distance: distance
-        }
-    }
+  if (hasSearch) {
+    locations = locations.sort((a, b) => a.distance - b.distance).slice(0, 5);
+  }
 
-    let locations = await Promise.all(data.companies[0].stores.map(fetchStoreData));
-
-    if (hasSearch) {
-        locations = locations.sort((a, b) => a.distance - b.distance).slice(0, 5);
-      }
-
-    console.log(query.searchTerm);
-    console.log(lat);
-    console.log(lng);
-
-    return locations;
+  return locations;
 });
-

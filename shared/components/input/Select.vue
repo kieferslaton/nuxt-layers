@@ -1,7 +1,7 @@
 <template>
     <div class="select-input-container" :class="class">
         <label :for="id" class="long-label">{{ label }}</label>
-        <select :id="id" required :value="modelValue" @input="$emit('update:modelValue', $event.target.value)">
+        <select :id="id" required v-model="localValue" @change="onChange">
             <option value="" disabled selected hidden class="placeholder">- Select an Option -</option>
             <option v-for="(item, index) in options" :key="index" :value="item.value">{{ item.label }}</option>
         </select>
@@ -18,6 +18,16 @@ const props = defineProps({
 })
 
 const emits = defineEmits(['update:modelValue'])
+
+let localValue = ref(props.modelValue)
+
+watchEffect(() => {
+    localValue.value = props.modelValue
+})
+
+const onChange = () => {
+    emits('update:modelValue', localValue.value)
+}
 
 </script>
 <style scoped lang="scss">
