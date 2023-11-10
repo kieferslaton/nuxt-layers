@@ -1,5 +1,10 @@
 <template>
-  <Header :isDark="darkHeader" :isHeaderFixed="true" :currentItem="route.name" :siteType="props.siteType" />
+  <Header
+    :isDark="darkHeader"
+    :isHeaderFixed="true"
+    :currentItem="route.name"
+    :siteType="props.siteType"
+  />
   <slot />
   <Footer :siteType="props.siteType" />
 </template>
@@ -14,7 +19,7 @@ const darkHeader = computed(() => {
 
 useHead({
   bodyAttrs: {
-    class: "bg-primary text-white"
+    class: "bg-primary text-primary",
   },
 });
 </script>

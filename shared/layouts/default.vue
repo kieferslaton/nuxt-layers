@@ -1,5 +1,10 @@
 <template>
-  <Header :isDark="true" :isHeaderFixed="false" :currentItem="route.name" :siteType="props.siteType" />
+  <Header
+    :isDark="true"
+    :isHeaderFixed="false"
+    :currentItem="route.name"
+    :siteType="props.siteType"
+  />
   <slot />
   <Footer :siteType="props.siteType" />
 </template>
@@ -10,7 +15,7 @@ const props = useAttrs();
 
 useHead({
   bodyAttrs: {
-    class: "bg-primary text-white"
+    class: "bg-primary text-white",
   },
 });
 </script>

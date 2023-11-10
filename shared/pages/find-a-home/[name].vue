@@ -4,9 +4,9 @@
       :style="{
         backgroundImage: `url('${home.defaultImageUrl}')`,
       }">
-      <div class="absolute left-0 top-0 w-full h-2/3 bg-gradient-to-b from-white to-transparent"></div>
+      <div class="absolute left-0 top-0 h-2/3 w-full bg-gradient-to-b from-white to-transparent"></div>
       <button
-        class="absolute bottom-4 left-1/2 flex -translate-x-1/2 items-center justify-center rounded bg-gray-dark px-4 py-2 text-xs tracking-widest"
+        class="absolute bottom-4 left-1/2 flex -translate-x-1/2 items-center justify-center rounded bg-gray-dark px-4 py-2 text-xs tracking-widest text-white"
         v-if="home.images && home.images.length > 1">
         <Icon name="image" size="12" color="white" class="mr-2" filled />
         1 / {{ home.images.length }}
@@ -118,7 +118,7 @@
         </Swiper>
       </ClientOnly>
       <div
-        class="absolute bottom-4 left-1/2 z-30 flex -translate-x-1/2 items-center justify-center rounded px-4 py-2 text-xs tracking-widest lg:bg-gray-dark">
+        class="absolute bottom-4 left-1/2 z-30 flex -translate-x-1/2 items-center justify-center rounded px-4 py-2 text-xs tracking-widest text-white lg:bg-gray-dark">
         <Icon name="image" size="12" color="white" class="mr-2" filled />
         {{ currentImageSlide }} / {{ home.images.length }}
       </div>
@@ -136,8 +136,8 @@ import { Swiper, SwiperSlide } from "swiper/vue";
 import "swiper/swiper-bundle.css";
 
 definePageMeta({
-  layout: 'fixed-header'
-})
+  layout: "fixed-header",
+});
 
 const homeLocations = ref(null);
 

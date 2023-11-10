@@ -1,7 +1,7 @@
 <template>
   <!-- Hero -->
   <section
-    class="px-row after-left-0 after:to-primary after:z-1 relative flex items-center justify-center bg-cover bg-bottom bg-no-repeat after:absolute after:top-0 after:h-full after:w-full after:bg-gradient-to-b after:from-transparent after:from-70% after:content-['']"
+    class="px-row after:to-primary after:z-1 relative flex items-center justify-center bg-cover bg-bottom bg-no-repeat after:absolute after:left-0 after:top-0 after:h-full after:w-full after:bg-gradient-to-b after:from-transparent after:from-70% after:content-['']"
     :style="{
       backgroundImage: `url(${pageData.hero.backgroundImage.sourceUrl})`,
     }"
@@ -45,7 +45,7 @@
     >
       <div v-for="stat in pageData.homeStats" class="lg:w-1/3" data-reveal>
         <h2
-          class="flex max-w-lg flex-col items-center text-4xl uppercase leading-[1.2] text-[#E1C16E] sm:text-5xl lg:max-w-xl"
+          class="flex max-w-lg flex-col items-center text-4xl uppercase leading-[1.2] tracking-widest text-[#E1C16E] sm:text-5xl lg:max-w-xl"
         >
           <span class="stat__number">{{ stat.stat.statNumber }}</span>
           <span>{{ stat.stat.statHeading }}</span>

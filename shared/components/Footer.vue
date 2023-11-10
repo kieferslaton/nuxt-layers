@@ -1,11 +1,19 @@
 <template>
   <Testimonial />
-  <footer class="flex flex-col items-start bg-primary px-row pb-32 pt-20 leading-loose text-white lg:px-row2x lg:pb-row">
-    <div class="flex w-full flex-col items-start lg:mb-40 lg:flex lg:flex-row lg:justify-between">
+  <footer
+    class="flex flex-col items-start bg-primary px-row pb-32 pt-20 leading-loose text-white lg:px-row2x lg:pb-row"
+  >
+    <div
+      class="flex w-full flex-col items-start lg:mb-40 lg:flex lg:flex-row lg:justify-between"
+    >
       <a href="/" class="mb-16 self-center lg:mb-0 lg:mr-36 lg:self-start">
         <img :src="currentLogo" alt="Regional Home" class="lg:w-[200px]" />
       </a>
-      <div v-if="storeData" class="w-full">
+
+      <div
+        v-if="storeData"
+        class="flex w-full flex-col justify-between sm:w-2/3 lg:flex-row"
+      >
         <div class="mb-6 lg:mb-0">
           <h4>Address</h4>
           <address class="not-italic">
@@ -14,12 +22,14 @@
           </address>
           <a href="/" class="text-secondary underline">Get Directions</a>
         </div>
+
         <div class="mb-6 lg:mb-0">
           <h4>Phone</h4>
           <a href="tel:60193913459" class="mb-6 text-secondary underline">{{
             formatPhone(storeData.phone)
           }}</a>
         </div>
+
         <div class="mb-16 w-full lg:mb-0 lg:w-[20vw]">
           <h4>Hours</h4>
           <table>
@@ -39,32 +49,41 @@
         </div>
       </div>
     </div>
-    <div class="mb-16 flex w-full flex-nowrap items-center justify-center gap-10 lg:mb-40">
-      <div v-for="item in ['facebook', 'instagram', 'tiktok', 'youtube']"
-        class="flex h-10 w-10 rotate-45 items-center justify-center rounded-sm border border-secondary">
+    <div
+      class="mb-16 flex w-full flex-nowrap items-center justify-center gap-10 lg:mb-40"
+    >
+      <div
+        v-for="item in ['facebook', 'instagram', 'tiktok', 'youtube']"
+        class="flex h-10 w-10 rotate-45 items-center justify-center rounded-sm border border-secondary"
+      >
         <SocialIcon class="-rotate-45" :social="item" />
       </div>
     </div>
     <div class="mb-16 flex flex-wrap justify-center lg:mb-10 lg:w-full">
-      <a class="footer-link px-4 underline" v-for="item in menuItems" :key="item.node.uri" :href="item.node.uri">{{
-        item.node.label }}</a>
+      <a
+        class="footer-link px-4 underline"
+        v-for="item in menuItems"
+        :key="item.node.uri"
+        :href="item.node.uri"
+        >{{ item.node.label }}</a
+      >
     </div>
     <span class="smallcaps self-center">&copy 2023 Regional Enterprises</span>
   </footer>
 </template>
 <script setup>
 const props = defineProps({
-  siteType: String
+  siteType: String,
 });
 
 let storeData = null;
 
-if (props.siteType === 'store') {
-  const { data } = await useFetch('/api/locationinfo')
+if (props.siteType === "store") {
+  const { data } = await useFetch("/api/locationinfo");
   storeData = data;
 }
 
-const { data: menuItems } = await getMenu('Footer Navigation', props.siteType);
+const { data: menuItems } = await getMenu("Footer Navigation", props.siteType);
 
 console.log(menuItems);
 
