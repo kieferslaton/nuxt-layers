@@ -11,9 +11,7 @@ export default defineEventHandler(async (event) => {
     items = cachedInventoryItems;
     fetchedFromCache = true;
   } else {
-    const response = await fetch(
-      "https://media.regionalhomes.net/regent-public/company-master.json"
-    );
+    const response = await fetch(process.env.MASTER_URL);
     const data = await response.json();
 
     const inventoryItems = [];

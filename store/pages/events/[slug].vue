@@ -26,9 +26,6 @@
     </div>
 </template>
 <script setup>
-import { Swiper, SwiperSlide } from 'swiper/vue';
-import 'swiper/swiper-bundle.css';
 const route = useRoute();
-console.log('Route: ' + route.params.slug);
 const event = await getEvent(route.params.slug);
 </script>

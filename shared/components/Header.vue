@@ -65,13 +65,13 @@ const currentLogo = computed(() => {
   let logoPath;
 
   switch (theme) {
-    case "Regional":
+    case "BrandA":
       logoPath =
         props.isDark
-          ? "/logos/regional-logo-white.svg"
-          : "/logos/regional-logo.svg";
+          ? "/logos/logo-white.svg"
+          : "/logos/logo.svg";
       break;
-    case "Town and Country":
+    case "BrandB":
       logoPath =
         props.isDark
           ? "/logos/tc-logo-white.svg"

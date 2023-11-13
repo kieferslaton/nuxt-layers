@@ -11,9 +11,7 @@ export default defineEventHandler(async (event) => {
     hasSearch = true;
   }
 
-  const response = await fetch(
-    "https://media.regionalhomes.net/regent-public/company-master.json"
-  );
+  const response = await fetch(process.env.MASTER_URL);
   const data = await response.json();
 
   function getDistanceFromLatLonInKm(lat1, lon1, lat2, lon2) {
@@ -39,7 +37,7 @@ export default defineEventHandler(async (event) => {
     const response = await fetch(store.dataUrl);
     const data = await response.json();
 
-    const apiKey = "AIzaSyCrI98GTvPp-yGlhnVKX2sgGeexccPOKAk";
+    const apiKey = process.env.GOOGLE_MAPS_API_KEY;
     const url = `https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(
       data.store.streetAddress1 + "," + data.store.city + " " + data.store.state
     )}&key=${apiKey}`;

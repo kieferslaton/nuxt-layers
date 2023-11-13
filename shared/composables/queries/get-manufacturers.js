@@ -35,7 +35,7 @@ export default async function () {
 
   var availableServices = manufacturerData.data.manufacturers.edges.map((edge) => edge.node);
 
-  const storeData = await $fetch(config.public.regionalApiUrl);
+  const storeData = await $fetch(config.public.apiUrl);
 
   if (storeData) {
     availableServices = availableServices.filter((service) => {

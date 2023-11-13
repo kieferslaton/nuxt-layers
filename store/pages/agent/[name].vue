@@ -72,8 +72,7 @@ import Hls from "hls.js";
 import customMarker from "~/assets/images/map-marker.png";
 
 const getLatLng = async (address) => {
-  console.log(address);
-  const apiKey = "AIzaSyCrI98GTvPp-yGlhnVKX2sgGeexccPOKAk";
+  const apiKey = process.env.GOOGLE_MAPS_API_KEY;
   const url = `https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(
     address
   )}&key=${apiKey}`;
@@ -125,7 +124,5 @@ onMounted(() => {
     hls.loadSource(agent.agentFields.agentVideo);
     hls.attachMedia(video.value);
   }
-
-  console.log(mapCenter);
 });
 </script>

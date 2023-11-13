@@ -1,5 +1,5 @@
 const themes = {
-  Regional: {
+  "BrandA": {
     primary: "#234C5C",
     "primary-light": "#395E6D",
     "primary-lighter": "#5A7985",
@@ -14,7 +14,7 @@ const themes = {
     accent: "#FA5F55",
     error: "#FA5F55",
   },
-  "Town and Country": {
+  "BrandB": {
     primary: "#823331",
     "primary-light": "#BA5552",
     "primary-lighter": "#E16D5C",
@@ -31,7 +31,7 @@ const themes = {
   },
 };
 
-const selectedTheme = process.env.THEME || "Regional";
+const selectedTheme = process.env.THEME || "BrandA";
 
 module.exports = {
   content: ["./components/**/*.vue", "./layouts/**/*.vue", "./pages/**/*.vue"],

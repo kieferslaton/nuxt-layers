@@ -24,7 +24,7 @@ export default async function () {
               statNumber
             }
           }
-          whyRegional {
+          whyUs {
             bullets {
               description
               icon
