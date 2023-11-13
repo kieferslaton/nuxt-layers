@@ -21,8 +21,8 @@
         </a>
       </div>
     </Card>
-    <GoogleMap api-key="AIzaSyCrI98GTvPp-yGlhnVKX2sgGeexccPOKAk" style="height: 215px; width: 100%"
-      class="mb-6 mt-8 overflow-hidden rounded" :center="mapCenter" :zoom="15">
+    <GoogleMap style="height: 215px; width: 100%" class="mb-6 mt-8 overflow-hidden rounded" :center="mapCenter"
+      :zoom="15">
       <Marker :options="{
         position: mapCenter,
         icon: {
